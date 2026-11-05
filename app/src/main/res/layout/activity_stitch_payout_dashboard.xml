@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0b1326">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#0b1326"
+        android:elevation="2dp"
+        app:title="Stitch Creator Treasury"
+        app:titleTextColor="#dae2fd"
+        app:navigationIcon="@android:drawable/ic_menu_revert"
+        app:navigationIconTint="#dae2fd" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- HERO CARD -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                app:cardBackgroundColor="#131b2e"
+                app:cardCornerRadius="16dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="#222a3d">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="● READY TO WITHDRAW"
+                            android:textColor="#4edea3"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="AVAILABLE CREATOR CAPITAL"
+                        android:textColor="#bbcabf"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvAvailableCapital"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$14,820.50 USD"
+                        android:textColor="#dae2fd"
+                        android:textSize="32sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="16dp" />
+
+                    <!-- Processing & Pending Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        android:layout_marginBottom="20dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:background="#171f33"
+                            android:padding="12dp"
+                            android:layout_marginEnd="6dp">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Processing" android:textColor="#7bd0ff" android:textSize="11sp" android:textStyle="bold"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="$2,180.00" android:textColor="#dae2fd" android:textSize="15sp" android:textStyle="bold" android:layout_marginTop="2dp"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ETA: Today, 5 PM" android:textColor="#bbcabf" android:textSize="11sp" android:layout_marginTop="1dp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:background="#171f33"
+                            android:padding="12dp"
+                            android:layout_marginStart="6dp">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pending Clearance" android:textColor="#bbcabf" android:textSize="11sp" android:textStyle="bold"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="$845.00" android:textColor="#dae2fd" android:textSize="15sp" android:textStyle="bold" android:layout_marginTop="2dp"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="From LIVE Vault" android:textColor="#bbcabf" android:textSize="11sp" android:layout_marginTop="1dp"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnWithdrawBank"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="⚡ Withdraw to Bank"
+                        android:textColor="#003824"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:backgroundTint="#4edea3"
+                        app:cornerRadius="24dp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- PAYOUT METHODS SECTION -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CONNECTED PAYOUT METHODS"
+                android:textColor="#4edea3"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="#171f33"
+                app:cardCornerRadius="14dp"
+                app:strokeWidth="0dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:gravity="center_vertical">
+                    <TextView android:layout_width="40dp" android:layout_height="40dp" android:text="🇺🇸" android:textSize="22sp" android:gravity="center" android:background="#222a3d" android:padding="4dp"/>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="14dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Chase Bank •••• 8291" android:textColor="#dae2fd" android:textSize="15sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Primary Direct Deposit • Zero Fee" android:textColor="#bbcabf" android:textSize="12sp" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Verified" android:textColor="#4edea3" android:textSize="12sp" android:textStyle="bold"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardBackgroundColor="#171f33"
+                app:cardCornerRadius="14dp"
+                app:strokeWidth="0dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:gravity="center_vertical">
+                    <TextView android:layout_width="40dp" android:layout_height="40dp" android:text="🇪🇺" android:textSize="22sp" android:gravity="center" android:background="#222a3d" android:padding="4dp"/>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="14dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Deutsche Bank •••• 4410" android:textColor="#dae2fd" android:textSize="15sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SEPA Instant Clearing (EUR) • Zero Fee" android:textColor="#bbcabf" android:textSize="12sp" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Verified" android:textColor="#4edea3" android:textSize="12sp" android:textStyle="bold"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

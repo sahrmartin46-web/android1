@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0b1326">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#0b1326"
+        android:elevation="2dp"
+        app:title="Creator Analytics &amp; Insights"
+        app:titleTextColor="#dae2fd"
+        app:navigationIcon="@android:drawable/ic_menu_revert"
+        app:navigationIconTint="#dae2fd" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Overview Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#131b2e"
+                app:cardCornerRadius="16dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="#222a3d">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📈 PERFORMANCE OVERVIEW (LAST 7 DAYS)"
+                        android:textColor="#4edea3"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="248,520 Total Views (+28.4%)"
+                        android:textColor="#dae2fd"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="6dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Metrics Grid -->
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:useDefaultMargins="true"
+                android:alignmentMode="alignMargins"
+                android:layout_marginBottom="16dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    app:cardBackgroundColor="#171f33"
+                    app:cardCornerRadius="14dp"
+                    app:strokeWidth="0dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Profile Views" android:textColor="#bbcabf" android:textSize="12sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="14,230" android:textColor="#dae2fd" android:textSize="20sp" android:textStyle="bold" android:layout_marginTop="4dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+18.2% vs last week" android:textColor="#4edea3" android:textSize="11sp" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    app:cardBackgroundColor="#171f33"
+                    app:cardCornerRadius="14dp"
+                    app:strokeWidth="0dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="New Followers" android:textColor="#bbcabf" android:textSize="12sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+3,420" android:textColor="#dae2fd" android:textSize="20sp" android:textStyle="bold" android:layout_marginTop="4dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+12.5% growth" android:textColor="#4edea3" android:textSize="11sp" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </GridLayout>
+
+            <!-- Engagement Rate Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardBackgroundColor="#171f33"
+                app:cardCornerRadius="16dp"
+                app:strokeWidth="0dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Engagement Rate" android:textColor="#bbcabf" android:textSize="12sp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="14.8%" android:textColor="#7bd0ff" android:textSize="28sp" android:textStyle="bold" android:layout_marginTop="4dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Higher than 92% of creators in your category" android:textColor="#bbcabf" android:textSize="12sp" android:layout_marginTop="4dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

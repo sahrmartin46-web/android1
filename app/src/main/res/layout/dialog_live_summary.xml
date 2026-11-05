@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#161823"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="📊 LIVE STREAM SUMMARY"
+        android:textColor="#25F4EE"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="#222534"
+        app:cardCornerRadius="16dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="#2F3241">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="8dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Duration" android:textColor="#8A8B91" android:textSize="14sp"/>
+                <TextView android:id="@+id/tvSummaryDuration" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="00:45:12" android:textColor="#FFFFFF" android:textSize="14sp" android:textStyle="bold"/>
+            </RelativeLayout>
+
+            <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="8dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Peak Viewers" android:textColor="#8A8B91" android:textSize="14sp"/>
+                <TextView android:id="@+id/tvSummaryPeakViewers" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="15,820" android:textColor="#FFFFFF" android:textSize="14sp" android:textStyle="bold"/>
+            </RelativeLayout>
+
+            <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="8dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Total Diamonds Earned" android:textColor="#8A8B91" android:textSize="14sp"/>
+                <TextView android:id="@+id/tvSummaryDiamonds" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="12,540 💎" android:textColor="#25F4EE" android:textSize="14sp" android:textStyle="bold"/>
+            </RelativeLayout>
+
+            <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="New Followers Gained" android:textColor="#8A8B91" android:textSize="14sp"/>
+                <TextView android:id="@+id/tvSummaryFollowers" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="2,430" android:textColor="#FE2C55" android:textSize="14sp" android:textStyle="bold"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDoneSummary"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Done"
+        android:textAllCaps="false"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:backgroundTint="#FE2C55"
+        app:cornerRadius="24dp" />
+
+</LinearLayout>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#161823"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="⚙️ Live Stream Grid Layouts"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp" />
+
+    <TextView android:id="@+id/layout1" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="👤 1 Person (Full Screen Host)" android:textColor="#25F4EE" android:textSize="15sp" android:paddingVertical="12dp" android:clickable="true" android:focusable="true"/>
+    <TextView android:id="@+id/layout2" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="👥 2 Persons (50/50 Split)" android:textColor="#FFFFFF" android:textSize="15sp" android:paddingVertical="12dp" android:clickable="true" android:focusable="true"/>
+    <TextView android:id="@+id/layout3" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="👥 3 Persons (Host + 2 Guests)" android:textColor="#FFFFFF" android:textSize="15sp" android:paddingVertical="12dp" android:clickable="true" android:focusable="true"/>
+    <TextView android:id="@+id/layout4" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="🔲 4 Persons (2x2 Grid)" android:textColor="#FFFFFF" android:textSize="15sp" android:paddingVertical="12dp" android:clickable="true" android:focusable="true"/>
+    <TextView android:id="@+id/layout6" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="🔲 6 Persons (2x3 Grid)" android:textColor="#FFFFFF" android:textSize="15sp" android:paddingVertical="12dp" android:clickable="true" android:focusable="true"/>
+    <TextView android:id="@+id/layout9" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="🔲 9 Persons (3x3 Grid)" android:textColor="#FFFFFF" android:textSize="15sp" android:paddingVertical="12dp" android:clickable="true" android:focusable="true"/>
+    <TextView android:id="@+id/layout16" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="🔲 16 Persons (4x4 Grid)" android:textColor="#FFFFFF" android:textSize="15sp" android:paddingVertical="12dp" android:clickable="true" android:focusable="true"/>
+
+</LinearLayout>

@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <!-- Top Bar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_revert"
+            app:tint="#FFFFFF"
+            android:contentDescription="Back"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="▶ Pulse"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="USER PROFILE"
+                android:textColor="#B3B3B3"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnMore"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_more"
+            app:tint="#FFFFFF"
+            android:contentDescription="More"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/topBar"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="32dp">
+
+            <!-- Handle & Verified Badge -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:paddingTop="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="\@maya.creates"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="4dp"
+                    android:src="@android:drawable/presence_online"
+                    app:tint="#25F4EE"
+                    android:contentDescription="Verified" />
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_marginStart="4dp"
+                    android:src="@android:drawable/arrow_down_float"
+                    app:tint="#B3B3B3"
+                    android:contentDescription="Dropdown" />
+
+            </LinearLayout>
+
+            <!-- Avatar with PRO Neon Glow Ring -->
+            <RelativeLayout
+                android:layout_width="84dp"
+                android:layout_height="84dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    app:cardBackgroundColor="#121212"
+                    app:cardCornerRadius="42dp"
+                    app:strokeColor="#25F4EE"
+                    app:strokeWidth="2.5dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_default_avatar"
+                        android:contentDescription="Avatar" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- PRO Badge -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="-4dp"
+                    android:background="@drawable/btn_primary_gradient"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="1dp"
+                    android:text="PRO"
+                    android:textColor="#FFFFFF"
+                    android:textSize="9sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <!-- Name & Bio -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="Maya Lin (she/her)"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="Visual artist &amp; electronic music producer 🎧 |\nTokyo ↔ LA | New single out now 👇"
+                android:textColor="#B3B3B3"
+                android:textSize="12sp"
+                android:lineSpacingExtra="2dp" />
+
+            <!-- Linktr.ee Pill -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/btn_outline_pill"
+                android:backgroundTint="#1AFFFFFF"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🔗 linktr.ee/mayacreates →"
+                    android:textColor="#25F4EE"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- Stats Row: Following, Followers, Likes -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="248"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="FOLLOWING"
+                        android:textColor="#B3B3B3"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3.2M"
+                        android:textColor="#25F4EE"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="FOLLOWERS"
+                        android:textColor="#B3B3B3"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="48.9M"
+                        android:textColor="#FE2C55"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LIKES"
+                        android:textColor="#B3B3B3"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Tiny Action Buttons: Follow, Share, Music -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFollow"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:text="👤 Follow"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    app:backgroundTint="@null"
+                    android:background="@drawable/btn_primary_gradient"
+                    app:cornerRadius="16dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnShare"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    android:text="Share"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:backgroundTint="#1AFFFFFF"
+                    app:cornerRadius="16dp"
+                    app:strokeColor="#33FFFFFF"
+                    app:strokeWidth="1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnMusic"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="6dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    app:icon="@android:drawable/ic_media_play"
+                    app:iconTint="#FFFFFF"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    android:backgroundTint="#1AFFFFFF"
+                    app:cornerRadius="16dp"
+                    app:strokeColor="#33FFFFFF"
+                    app:strokeWidth="1dp" />
+
+            </LinearLayout>
+
+            <!-- Highlights / Stories Row -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:paddingHorizontal="16dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!-- Tokyo Tour -->
+                    <LinearLayout android:layout_width="56dp" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center" android:layout_marginEnd="10dp">
+                        <com.google.android.material.card.MaterialCardView android:layout_width="48dp" android:layout_height="48dp" app:cardBackgroundColor="#121212" app:cardCornerRadius="24dp" app:strokeColor="#25F4EE" app:strokeWidth="2dp">
+                            <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="centerCrop" android:src="@drawable/ic_default_avatar" android:contentDescription="Tokyo Tour" />
+                        </com.google.android.material.card.MaterialCardView>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="Tokyo Tour" android:textColor="#FFFFFF" android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <!-- Studio Gear -->
+                    <LinearLayout android:layout_width="56dp" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center" android:layout_marginEnd="10dp">
+                        <com.google.android.material.card.MaterialCardView android:layout_width="48dp" android:layout_height="48dp" app:cardBackgroundColor="#121212" app:cardCornerRadius="24dp" app:strokeColor="#FE2C55" app:strokeWidth="2dp">
+                            <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="centerCrop" android:src="@drawable/ic_default_avatar" android:contentDescription="Studio Gear" />
+                        </com.google.android.material.card.MaterialCardView>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="Studio Gear" android:textColor="#FFFFFF" android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <!-- Tutorials -->
+                    <LinearLayout android:layout_width="56dp" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center" android:layout_marginEnd="10dp">
+                        <com.google.android.material.card.MaterialCardView android:layout_width="48dp" android:layout_height="48dp" app:cardBackgroundColor="#121212" app:cardCornerRadius="24dp" app:strokeColor="#25F4EE" app:strokeWidth="2dp">
+                            <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="centerCrop" android:src="@drawable/ic_default_avatar" android:contentDescription="Tutorials" />
+                        </com.google.android.material.card.MaterialCardView>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="Tutorials" android:textColor="#FFFFFF" android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <!-- Drops -->
+                    <LinearLayout android:layout_width="56dp" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center" android:layout_marginEnd="10dp">
+                        <com.google.android.material.card.MaterialCardView android:layout_width="48dp" android:layout_height="48dp" app:cardBackgroundColor="#121212" app:cardCornerRadius="24dp" app:strokeColor="#FE2C55" app:strokeWidth="2dp">
+                            <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="centerCrop" android:src="@drawable/ic_default_avatar" android:contentDescription="Drops" />
+                        </com.google.android.material.card.MaterialCardView>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="Drops" android:textColor="#FFFFFF" android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <!-- New -->
+                    <LinearLayout android:layout_width="56dp" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center">
+                        <com.google.android.material.card.MaterialCardView android:layout_width="48dp" android:layout_height="48dp" app:cardBackgroundColor="#1AFFFFFF" app:cardCornerRadius="24dp" app:strokeColor="#33FFFFFF" app:strokeWidth="1dp">
+                            <ImageView android:layout_width="20dp" android:layout_height="20dp" android:layout_gravity="center" android:src="@android:drawable/ic_input_add" app:tint="#FFFFFF" android:contentDescription="New" />
+                        </com.google.android.material.card.MaterialCardView>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="New" android:textColor="#FFFFFF" android:textSize="10sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <!-- Profile Tabs -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="#121212">
+
+                <ImageView android:layout_width="0dp" android:layout_height="20dp" android:layout_weight="1" android:src="@android:drawable/ic_menu_crop" app:tint="#25F4EE" android:contentDescription="Grid" />
+                <ImageView android:layout_width="0dp" android:layout_height="20dp" android:layout_weight="1" android:src="@drawable/ic_heart" app:tint="#B3B3B3" android:contentDescription="Likes" />
+                <ImageView android:layout_width="0dp" android:layout_height="20dp" android:layout_weight="1" android:src="@android:drawable/ic_menu_agenda" app:tint="#B3B3B3" android:contentDescription="Bookmarks" />
+                <ImageView android:layout_width="0dp" android:layout_height="20dp" android:layout_weight="1" android:src="@android:drawable/ic_menu_sort_by_size" app:tint="#B3B3B3" android:contentDescription="Reposts" />
+
+            </LinearLayout>
+
+            <!-- Profile Video Grid -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvProfileVideos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:paddingHorizontal="8dp"
+                android:paddingTop="6dp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

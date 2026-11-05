@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000000"
+    android:padding="16dp">
+
+    <!-- Search Bar -->
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search Fugen (Users, Videos, Tags, Sounds, Topics)..."
+        app:boxStrokeColor="#25F4EE"
+        app:hintTextColor="#25F4EE"
+        app:startIconDrawable="@android:drawable/ic_menu_search"
+        app:startIconTint="#8A8B91">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- 5 Discovery Categories Chips (Users, Videos, Hashtags, Sounds, Topics) -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:scrollbars="none">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupDiscover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleSelection="true"
+            app:selectionRequired="true"
+            app:chipSpacingHorizontal="8dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipUsers"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="👤 Users"
+                android:textColor="#FFFFFF"
+                app:chipBackgroundColor="#161823"
+                app:chipStrokeColor="#FE2C55"
+                app:chipStrokeWidth="1dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipVideos"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📹 Videos"
+                android:textColor="#FFFFFF"
+                app:chipBackgroundColor="#161823"
+                app:chipStrokeColor="#33FFFFFF"
+                app:chipStrokeWidth="1dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipHashtags"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🏷️ Hashtags"
+                android:textColor="#FFFFFF"
+                app:chipBackgroundColor="#161823"
+                app:chipStrokeColor="#33FFFFFF"
+                app:chipStrokeWidth="1dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipSounds"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🎵 Sounds"
+                android:textColor="#FFFFFF"
+                app:chipBackgroundColor="#161823"
+                app:chipStrokeColor="#33FFFFFF"
+                app:chipStrokeWidth="1dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipTopics"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="💡 Topics"
+                android:textColor="#FFFFFF"
+                app:chipBackgroundColor="#161823"
+                app:chipStrokeColor="#33FFFFFF"
+                app:chipStrokeWidth="1dp" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/tvCategoryHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DISCOVER TOP CREATORS"
+        android:textColor="#25F4EE"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="12dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvDiscoverResults"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

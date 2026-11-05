@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- TikTok Curved Right Share Arrow Icon -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M14,9V5l7,7 -7,7v-4.1c-5,0 -9.27,1.6 -11,5.1 1,-5 4,-10 11,-11z" />
+</vector>

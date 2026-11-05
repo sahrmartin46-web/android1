@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <!-- Video Player Background (9:16 Cinematic Aspect Ratio) -->
+    <androidx.media3.ui.PlayerView
+        android:id="@+id/playerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:use_controller="false"
+        app:resize_mode="zoom"
+        app:surface_type="texture_view"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintDimensionRatio="9:16" />
+
+    <!-- Fallback Image View if Image Post (9:16 Aspect Ratio) -->
+    <ImageView
+        android:id="@+id/ivPostImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        android:contentDescription="Post Image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintDimensionRatio="9:16" />
+
+    <!-- Bottom Left: Author, Caption & Sound Info -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="24dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/tvDisplayName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:shadowColor="#000000"
+            android:shadowDx="0"
+            android:shadowDy="1"
+            android:shadowRadius="3" />
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:lineSpacingExtra="3dp"
+            android:shadowColor="#000000"
+            android:shadowDx="0"
+            android:shadowDy="1"
+            android:shadowRadius="3" />
+
+        <!-- Sound Info Container (Creator Picture + Original Sound Title + Interactive Tap) -->
+        <LinearLayout
+            android:id="@+id/llSoundContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/btn_outline_pill"
+            android:backgroundTint="#30000000"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:cardCornerRadius="10dp"
+                app:cardBackgroundColor="#121212"
+                app:strokeColor="#25F4EE"
+                app:strokeWidth="1dp">
+
+                <ImageView
+                    android:id="@+id/ivSoundAvatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_default_avatar"
+                    android:contentDescription="Creator Sound Picture" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tvSoundTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Original Sound - Creator"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Right Side Floating Action Column (Avatar, Like, Comment, Share, Save, Spinning Disc) -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="32dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Creator Avatar with Follow Badge -->
+        <FrameLayout
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/ivAvatar"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:background="@drawable/ic_default_avatar"
+                android:contentDescription="Avatar" />
+
+            <!-- Follow Plus Badge -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvFollowBadge"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="bottom|center_horizontal"
+                app:cardBackgroundColor="#FE2C55"
+                app:cardCornerRadius="10dp"
+                app:strokeWidth="0dp"
+                android:clickable="true"
+                android:focusable="true">
+                <ImageView
+                    android:id="@+id/ivFollowIcon"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center"
+                    android:src="@android:drawable/ic_input_add"
+                    app:tint="#FFFFFF"
+                    android:contentDescription="Follow" />
+            </com.google.android.material.card.MaterialCardView>
+
+        </FrameLayout>
+
+        <!-- Like Button -->
+        <LinearLayout
+            android:id="@+id/btnLikeLayoutImg"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="14dp"
+            android:paddingVertical="2dp">
+
+            <ImageView
+                android:id="@+id/ivLikeImg"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_heart"
+                app:tint="#FFFFFF"
+                android:contentDescription="Like" />
+
+            <TextView
+                android:id="@+id/tvLikesCountImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginTop="2dp" />
+
+        </LinearLayout>
+
+        <!-- Comment Button -->
+        <LinearLayout
+            android:id="@+id/btnCommentLayoutImg"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="14dp"
+            android:paddingVertical="2dp">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_comment"
+                app:tint="#FFFFFF"
+                android:contentDescription="Comment" />
+
+            <TextView
+                android:id="@+id/tvCommentsCountImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginTop="2dp" />
+
+        </LinearLayout>
+
+        <!-- Save / Bookmark Button -->
+        <LinearLayout
+            android:id="@+id/btnSaveLayoutImg"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="14dp"
+            android:paddingVertical="2dp">
+
+            <ImageView
+                android:id="@+id/ivSaveImg"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_bookmark"
+                app:tint="#FFFFFF"
+                android:contentDescription="Save" />
+
+            <TextView
+                android:id="@+id/tvSaveCountImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_marginTop="2dp" />
+
+        </LinearLayout>
+
+        <!-- Share Button -->
+        <LinearLayout
+            android:id="@+id/btnShareLayoutImg"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"
+            android:paddingVertical="2dp">
+
+            <ImageView
+                android:id="@+id/ivShareImg"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_tiktok_share"
+                app:tint="#FFFFFF"
+                android:contentDescription="Share" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Share"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_marginTop="2dp" />
+
+        </LinearLayout>
+
+        <!-- Spinning Audio Disc with Creator Picture at Bottom Right -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvSoundDisc"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:cardBackgroundColor="#121212"
+            app:cardCornerRadius="20dp"
+            app:strokeColor="#25F4EE"
+            app:strokeWidth="2dp"
+            android:clickable="true"
+            android:focusable="true">
+            <ImageView
+                android:id="@+id/ivSoundDiscAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_default_avatar"
+                android:contentDescription="Original Creator Sound Picture" />
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+    <!-- Hidden legacy wrappers to preserve view bindings in PostAdapter -->
+    <View
+        android:id="@+id/clHeader"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvVideo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <ImageButton
+        android:id="@+id/btnDeletePost"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="Delete" />
+    <TextView
+        android:id="@+id/tvUsernameDate"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <TextView
+        android:id="@+id/tvLikesCount"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <TextView
+        android:id="@+id/tvCommentsCount"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <View
+        android:id="@+id/btnLikeLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <View
+        android:id="@+id/btnCommentLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <View
+        android:id="@+id/btnShareLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <ImageView
+        android:id="@+id/ivVideoAvatar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        android:contentDescription="Avatar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <ImageView
+        android:id="@+id/ivVideoAvatarImg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        android:contentDescription="Avatar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

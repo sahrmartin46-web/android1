@@ -1,0 +1,22 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="45dp"
+    android:height="27dp"
+    android:viewportWidth="45"
+    android:viewportHeight="27">
+    <!-- Cyan Left Badge Offset -->
+    <path
+        android:fillColor="#25F4EE"
+        android:pathData="M6,0 h28 a7,7 0 0,1 7,7 v13 a7,7 0 0,1 -7,7 h-28 a7,7 0 0,1 -7,-7 v-13 a7,7 0 0,1 7,-7 Z" />
+    <!-- Magenta Right Badge Offset -->
+    <path
+        android:fillColor="#FE2C55"
+        android:pathData="M11,0 h28 a7,7 0 0,1 7,7 v13 a7,7 0 0,1 -7,7 h-28 a7,7 0 0,1 -7,-7 v-13 a7,7 0 0,1 7,-7 Z" />
+    <!-- White Center Pill -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M8.5,0 h28 a7,7 0 0,1 7,7 v13 a7,7 0 0,1 -7,7 h-28 a7,7 0 0,1 -7,-7 v-13 a7,7 0 0,1 7,-7 Z" />
+    <!-- Bold Black Center Plus (+) Symbol -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M21,8.5 h3 v3.5 h3.5 v3 h-3.5 v3.5 h-3 v-3.5 h-3.5 v-3 h3.5 Z" />
+</vector>

@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2E2845">
+
+    <!-- Top Creator Header Bar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clTopHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="8dp"
+        android:background="#2E2845"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Host Profile & Name Pill -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:background="#60000000"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="4dp"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@android:drawable/ic_menu_myplaces"
+                android:scaleType="centerCrop"
+                android:contentDescription="Host Avatar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="Luther..."
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="❤️ 0"
+                android:textColor="#FFB703"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <!-- Right Top Viewers & Power Button -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:background="#60000000"
+                android:paddingHorizontal="10dp"
+                android:gravity="center_vertical"
+                android:layout_marginEnd="8dp">
+
+                <TextView
+                    android:id="@+id/tvViewerCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="👤 0"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btnCloseLive"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="#60000000"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                app:tint="#FFFFFF"
+                android:contentDescription="Exit" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Top Badges Row -->
+    <LinearLayout
+        android:id="@+id/llBadgesRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="8dp"
+        android:background="#2E2845"
+        app:layout_constraintTop_toBottomOf="@id/clTopHeader">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#40000000"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            android:text="💎 League D3 top"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#40000000"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            android:text="🎨 LIVE Studio..."
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!-- Dynamic 4 Panel Layout Container -->
+    <FrameLayout
+        android:id="@+id/llLayoutContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#1E1A29"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@id/llBadgesRow"
+        app:layout_constraintBottom_toTopOf="@id/scrollJoinNotifications"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- 1. Side by Side Layout -->
+        <LinearLayout
+            android:id="@+id/layoutSideBySide"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_marginEnd="6dp"
+                app:cardBackgroundColor="#161823"
+                app:cardCornerRadius="16dp"
+                app:strokeWidth="2dp"
+                app:strokeColor="#25F4EE">
+                <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+                    <androidx.camera.view.PreviewView
+                        android:id="@+id/previewViewHostSide"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="👑 HOST" android:textColor="#000000" android:textSize="10sp" android:textStyle="bold" android:background="#25F4EE" android:paddingHorizontal="6dp" android:paddingVertical="2dp" android:layout_margin="8dp"/>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_marginStart="6dp"
+                app:cardBackgroundColor="#37394E"
+                app:cardCornerRadius="16dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="#2F3241">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#FFFFFF" android:textSize="32sp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Invite Guest" android:textColor="#CCCCCC" android:textSize="13sp" android:layout_marginTop="4dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <!-- 2. Spotlight Layout (Much Bigger Host Box) -->
+        <LinearLayout
+            android:id="@+id/layoutSpotlight"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3.0"
+                android:layout_marginBottom="6dp"
+                app:cardBackgroundColor="#161823"
+                app:cardCornerRadius="16dp"
+                app:strokeWidth="2dp"
+                app:strokeColor="#25F4EE">
+                <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+                    <androidx.camera.view.PreviewView
+                        android:id="@+id/previewViewHostSpotlight"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="👑 HOST (Spotlight)" android:textColor="#000000" android:textSize="10sp" android:textStyle="bold" android:background="#25F4EE" android:paddingHorizontal="6dp" android:paddingVertical="2dp" android:layout_margin="8dp"/>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.0"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:layout_margin="3dp" app:cardBackgroundColor="#37394E" app:cardCornerRadius="8dp"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="➕ Tobi" android:textColor="#25F4EE" android:textSize="11sp" android:textStyle="bold"/></com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:layout_margin="3dp" app:cardBackgroundColor="#37394E" app:cardCornerRadius="8dp"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="➕ Nana" android:textColor="#25F4EE" android:textSize="11sp" android:textStyle="bold"/></com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:layout_margin="3dp" app:cardBackgroundColor="#37394E" app:cardCornerRadius="8dp"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="➕ Richie" android:textColor="#25F4EE" android:textSize="11sp" android:textStyle="bold"/></com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:layout_margin="3dp" app:cardBackgroundColor="#37394E" app:cardCornerRadius="8dp"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="➕ Bella" android:textColor="#25F4EE" android:textSize="11sp" android:textStyle="bold"/></com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 3. Roundtable I Layout -->
+        <GridLayout
+            android:id="@+id/layoutRoundtable1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnCount="3"
+            android:rowCount="3"
+            android:alignmentMode="alignMargins"
+            android:visibility="gone">
+
+            <!-- Host Box with Camera Preview -->
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="2dp" app:cardBackgroundColor="#161823" app:cardCornerRadius="10dp" app:strokeWidth="1.5dp" app:strokeColor="#25F4EE">
+                <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+                    <androidx.camera.view.PreviewView android:id="@+id/previewViewHostRT1" android:layout_width="match_parent" android:layout_height="match_parent"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="👑 HOST" android:textColor="#000000" android:textSize="8sp" android:textStyle="bold" android:background="#25F4EE" android:layout_margin="2dp"/>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="2dp" app:cardBackgroundColor="#37394E" app:cardCornerRadius="10dp"><LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#FFFFFF" android:textSize="16sp" android:textStyle="bold"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Invite" android:textColor="#CCCCCC" android:textSize="8sp"/></LinearLayout></com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="2dp" app:cardBackgroundColor="#37394E" app:cardCornerRadius="10dp"><LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#FFFFFF" android:textSize="16sp" android:textStyle="bold"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Invite" android:textColor="#CCCCCC" android:textSize="8sp"/></LinearLayout></com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="2dp" app:cardBackgroundColor="#37394E" app:cardCornerRadius="10dp"><LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#FFFFFF" android:textSize="16sp" android:textStyle="bold"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Invite" android:textColor="#CCCCCC" android:textSize="8sp"/></LinearLayout></com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="2dp" app:cardBackgroundColor="#37394E" app:cardCornerRadius="10dp"><LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#FFFFFF" android:textSize="16sp" android:textStyle="bold"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Invite" android:textColor="#CCCCCC" android:textSize="8sp"/></LinearLayout></com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="2dp" app:cardBackgroundColor="#37394E" app:cardCornerRadius="10dp"><LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#FFFFFF" android:textSize="16sp" android:textStyle="bold"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Invite" android:textColor="#CCCCCC" android:textSize="8sp"/></LinearLayout></com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="2dp" app:cardBackgroundColor="#37394E" app:cardCornerRadius="10dp"><LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#FFFFFF" android:textSize="16sp" android:textStyle="bold"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Invite" android:textColor="#CCCCCC" android:textSize="8sp"/></LinearLayout></com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="2dp" app:cardBackgroundColor="#37394E" app:cardCornerRadius="10dp"><LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#FFFFFF" android:textSize="16sp" android:textStyle="bold"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Invite" android:textColor="#CCCCCC" android:textSize="8sp"/></LinearLayout></com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="2dp" app:cardBackgroundColor="#37394E" app:cardCornerRadius="10dp"><LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#FFFFFF" android:textSize="16sp" android:textStyle="bold"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Invite" android:textColor="#CCCCCC" android:textSize="8sp"/></LinearLayout></com.google.android.material.card.MaterialCardView>
+
+        </GridLayout>
+
+        <!-- 4. Roundtable II Layout -->
+        <GridLayout
+            android:id="@+id/layoutRoundtable2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnCount="3"
+            android:rowCount="3"
+            android:alignmentMode="alignMargins"
+            android:visibility="gone">
+
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="3dp" app:cardBackgroundColor="#37394E" app:cardCornerRadius="10dp"><LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#FFFFFF" android:textSize="18sp" android:textStyle="bold"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Invite" android:textColor="#CCCCCC" android:textSize="9sp"/></LinearLayout></com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="3dp" app:cardBackgroundColor="#37394E" app:cardCornerRadius="10dp"><LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#FFFFFF" android:textSize="18sp" android:textStyle="bold"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Invite" android:textColor="#CCCCCC" android:textSize="9sp"/></LinearLayout></com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="3dp" app:cardBackgroundColor="#37394E" app:cardCornerRadius="10dp"><LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#FFFFFF" android:textSize="18sp" android:textStyle="bold"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Invite" android:textColor="#CCCCCC" android:textSize="9sp"/></LinearLayout></com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="3dp" app:cardBackgroundColor="#37394E" app:cardCornerRadius="10dp"><LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#FFFFFF" android:textSize="18sp" android:textStyle="bold"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Invite" android:textColor="#CCCCCC" android:textSize="9sp"/></LinearLayout></com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="3dp" app:cardBackgroundColor="#161823" app:cardCornerRadius="10dp" app:strokeWidth="1.5dp" app:strokeColor="#FE2C55">
+                <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+                    <androidx.camera.view.PreviewView android:id="@+id/previewViewHostRT2" android:layout_width="match_parent" android:layout_height="match_parent"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Host" android:textColor="#FFFFFF" android:textSize="8sp" android:textStyle="bold" android:background="#60000000" android:paddingHorizontal="4dp" android:layout_margin="3dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:layout_margin="3dp" android:text="Luther King..." android:textColor="#FFFFFF" android:textSize="8sp" android:maxLines="1" android:background="#60000000" android:paddingHorizontal="3dp"/>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="3dp" app:cardBackgroundColor="#37394E" app:cardCornerRadius="10dp"><LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#FFFFFF" android:textSize="18sp" android:textStyle="bold"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Invite" android:textColor="#CCCCCC" android:textSize="9sp"/></LinearLayout></com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="3dp" app:cardBackgroundColor="#37394E" app:cardCornerRadius="10dp"><LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#FFFFFF" android:textSize="18sp" android:textStyle="bold"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Invite" android:textColor="#CCCCCC" android:textSize="9sp"/></LinearLayout></com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="3dp" app:cardBackgroundColor="#37394E" app:cardCornerRadius="10dp"><LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#FFFFFF" android:textSize="18sp" android:textStyle="bold"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Invite" android:textColor="#CCCCCC" android:textSize="9sp"/></LinearLayout></com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="3dp" app:cardBackgroundColor="#37394E" app:cardCornerRadius="10dp"><LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#FFFFFF" android:textSize="18sp" android:textStyle="bold"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Invite" android:textColor="#CCCCCC" android:textSize="9sp"/></LinearLayout></com.google.android.material.card.MaterialCardView>
+
+        </GridLayout>
+
+    </FrameLayout>
+
+    <!-- Scrolling Join Notifications Overlay -->
+    <ScrollView
+        android:id="@+id/scrollJoinNotifications"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@id/llBottomToolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/tvJoinNotifications"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🟣 Rukhsana Bibi joined\n🔵 naijviral joined\n⭐ naijviral followed the LIVE creator\n💬 Encourage your viewers to share your LIVE!"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:lineSpacingExtra="4dp" />
+
+    </ScrollView>
+
+    <!-- Bottom LIVE Toolbar -->
+    <LinearLayout
+        android:id="@+id/llBottomToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingHorizontal="16dp"
+        android:background="#1A1829"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_share"
+            app:tint="#FF477E"
+            android:contentDescription="Co-host" />
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_myplaces"
+            app:tint="#FF477E"
+            android:contentDescription="Guests" />
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_send"
+            app:tint="#FFFFFF"
+            android:contentDescription="Chat" />
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_agenda"
+            app:tint="#FFFFFF"
+            android:contentDescription="Tools" />
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_send"
+            app:tint="#FFFFFF"
+            android:contentDescription="Share" />
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_edit"
+            app:tint="#FFFFFF"
+            android:contentDescription="Effects" />
+
+        <ImageButton
+            android:id="@+id/btnStudioGifts"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/btn_star_big_on"
+            app:tint="#FFB703"
+            android:contentDescription="Gifts" />
+
+        <ImageButton
+            android:id="@+id/btnLiveSettings"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_settings"
+            app:tint="#FFFFFF"
+            android:contentDescription="Settings" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

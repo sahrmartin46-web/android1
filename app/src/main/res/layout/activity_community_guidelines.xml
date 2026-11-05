@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000000">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#000000"
+        android:elevation="4dp"
+        app:title="Community Guidelines"
+        app:titleTextColor="#FFFFFF"
+        app:navigationIcon="@android:drawable/ic_menu_revert"
+        app:navigationIconTint="#FFFFFF" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Our Commitment to Safety"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Welcome to our community. We built this platform to foster authentic connections, creative expression, and positive interactions. To keep our community safe, welcoming, and inspiring for everyone, all members must adhere to these Community Guidelines."
+                android:textColor="#ADB5BD"
+                android:textSize="15sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Policy 1 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1. Respect &amp; Kindness"
+                android:textColor="#FE2C55"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="We do not tolerate harassment, bullying, intimidation, threats, or hate speech of any kind. Treat fellow creators and community members with dignity and respect."
+                android:textColor="#ADB5BD"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="20dp" />
+
+            <!-- Policy 2 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2. Safety &amp; Integrity"
+                android:textColor="#FE2C55"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Do not post content that encourages self-harm, violence, illegal acts, or dangerous activities that could result in serious injury. User safety is our highest priority."
+                android:textColor="#ADB5BD"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="20dp" />
+
+            <!-- Policy 3 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3. Authenticity &amp; Spam"
+                android:textColor="#FE2C55"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Be yourself. Impersonation, fake accounts, coordinated inauthentic behavior, phishing, and automated spamming are strictly prohibited."
+                android:textColor="#ADB5BD"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="20dp" />
+
+            <!-- Policy 4 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4. Intellectual Property &amp; Media"
+                android:textColor="#FE2C55"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Only share photos, videos, and media that you created or have legal authorization to post. Respect copyright laws and creator ownership."
+                android:textColor="#ADB5BD"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="24dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAcceptGuidelines"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="I Understand &amp; Agree"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:backgroundTint="#FE2C55"
+                app:cornerRadius="26dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

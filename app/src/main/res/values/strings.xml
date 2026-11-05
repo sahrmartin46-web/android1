@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Fugen</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="email">Email Address</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="display_name">Display Name</string>
+    <string name="no_account">Don\'t have an account? Register</string>
+    <string name="has_account">Already have an account? Login</string>
+    <string name="create_post">Create Post</string>
+    <string name="post">Post</string>
+    <string name="what_on_your_mind">What\'s on your mind?</string>
+    <string name="add_image">Add Photo</string>
+    <string name="add_video">Add Video</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
+    <string name="follow">Follow</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="posts">Posts</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_discover">Discover</string>
+    <string name="nav_create">+</string>
+    <string name="nav_inbox">Inbox</string>
+    <string name="nav_profile">Profile</string>
+</resources>

@@ -1,0 +1,44 @@
+{
+  "name": "social-media-backend",
+  "version": "1.0.0",
+  "description": "Social media REST API backend",
+  "main": "src/server.js",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "prisma:seed": "node prisma/seedGifts.js"
+  },
+  "keywords": [
+    "social",
+    "media",
+    "backend",
+    "express",
+    "prisma",
+    "rest-api"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.4.0",
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.7.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "livekit-server-sdk": "^2.19.1",
+    "multer": "^2.4.0",
+    "node-media-server": "^4.4.3",
+    "socket.io": "^4.8.4",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "prisma": "^6.4.0"
+  }
+}

@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <!-- Camera Preview Surface -->
+    <SurfaceView
+        android:id="@+id/surfaceViewCamera"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Dark Scrim Gradient Overlay -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#30000000" />
+
+    <!-- Multi-Guest Grid Layout Container (Dynamic Host & Guests split views) -->
+    <LinearLayout
+        android:id="@+id/llGuestGridContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@id/clTopBar"
+        app:layout_constraintBottom_toTopOf="@id/llActiveLiveControls"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Row 1 (Host + Guest 1) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginEnd="2dp"
+                android:background="#161823">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|start"
+                    android:padding="8dp"
+                    android:text="Host (You)"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:background="#80000000" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/flGuest1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="2dp"
+                android:background="#222534">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="👤 Guest 1 (Connecting...)"
+                    android:textColor="#8A8B91"
+                    android:textSize="13sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|start"
+                    android:padding="8dp"
+                    android:text="Guest 1"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:background="#80000000" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <!-- Row 2 (Guest 2 + Guest 3) -->
+        <LinearLayout
+            android:id="@+id/llRow2Guests"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp"
+            android:visibility="gone">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginEnd="2dp"
+                android:background="#222534">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="👤 Guest 2"
+                    android:textColor="#8A8B91"
+                    android:textSize="13sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|start"
+                    android:padding="8dp"
+                    android:text="Guest 2"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:background="#80000000" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="2dp"
+                android:background="#222534">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="👤 Guest 3"
+                    android:textColor="#8A8B91"
+                    android:textSize="13sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|start"
+                    android:padding="8dp"
+                    android:text="Guest 3"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:background="#80000000" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Top Bar: Close, Live Badge, Viewers -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btnCloseLive"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="#80000000"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            app:tint="#FFFFFF"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="Close Live" />
+
+        <!-- LIVE Badge & Viewers Counter -->
+        <LinearLayout
+            android:id="@+id/llLiveBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FE2C55"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="5dp"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnCloseLive"
+            android:layout_marginStart="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LIVE"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvViewerCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="👁 1"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- Stream Quality / Health Pill -->
+        <TextView
+            android:id="@+id/tvStreamHealth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#60000000"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            android:text="1080p 60FPS"
+            android:textColor="#25F4EE"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Right Side TikTok-Style Creator Floating Actions Bar -->
+    <LinearLayout
+        android:id="@+id/llCreatorTools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="110dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Flip Camera -->
+        <ImageButton
+            android:id="@+id/btnFlipCamera"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="#60000000"
+            android:src="@android:drawable/ic_menu_camera"
+            app:tint="#FFFFFF"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="Flip Camera" />
+
+        <!-- Layout Switcher (Grid / Dual / Solo) -->
+        <ImageButton
+            android:id="@+id/btnSwitchLayout"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="#60000000"
+            android:src="@android:drawable/ic_menu_crop"
+            app:tint="#25F4EE"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="Switch Layout" />
+
+        <!-- Effects / Filters -->
+        <ImageButton
+            android:id="@+id/btnEffects"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="#60000000"
+            android:src="@android:drawable/ic_menu_edit"
+            app:tint="#FFFFFF"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="Effects" />
+
+        <!-- Guest / Co-Host -->
+        <ImageButton
+            android:id="@+id/btnGuest"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="#60000000"
+            android:src="@android:drawable/ic_menu_myplaces"
+            app:tint="#FFFFFF"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="Co-Host" />
+
+        <!-- Gifts / Rewards -->
+        <ImageButton
+            android:id="@+id/btnGifts"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="#60000000"
+            android:src="@android:drawable/ic_menu_agenda"
+            app:tint="#25F4EE"
+            android:contentDescription="Gifts" />
+
+    </LinearLayout>
+
+    <!-- Setup Form Container (Visible Before Going Live) -->
+    <LinearLayout
+        android:id="@+id/llSetupContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="#90000000"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go Live Creator Studio"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etStreamTitle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#161823"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#8A8B91"
+            android:hint="What's your stream about? (e.g. Q&amp;A, Gaming)"
+            android:paddingHorizontal="16dp"
+            android:textSize="15sp"
+            android:inputType="text"
+            android:layout_marginBottom="16dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnStartLive"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:text="🔴 Go Live Now"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:backgroundTint="#FE2C55"
+            app:cornerRadius="28dp" />
+
+    </LinearLayout>
+
+    <!-- Active Live Chat & Broadcaster Controls (Visible While Live) -->
+    <LinearLayout
+        android:id="@+id/llActiveLiveControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Real-Time Chat Log -->
+        <ScrollView
+            android:id="@+id/scrollChat"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvLiveChatLog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="💬 Stream started. Welcome viewers!"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp" />
+
+        </ScrollView>
+
+        <!-- Broadcaster Chat Input & Send Button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="10dp">
+
+            <EditText
+                android:id="@+id/etChatInput"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="#80161823"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#8A8B91"
+                android:hint="Say something to your viewers..."
+                android:paddingHorizontal="16dp"
+                android:textSize="14sp"
+                android:inputType="text" />
+
+            <ImageButton
+                android:id="@+id/btnSendChat"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:background="#FE2C55"
+                android:src="@android:drawable/ic_menu_send"
+                app:tint="#FFFFFF"
+                android:contentDescription="Send" />
+
+        </LinearLayout>
+
+        <!-- End Stream Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnEndLive"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="End Live Stream"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:backgroundTint="#E03131"
+            app:cornerRadius="24dp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

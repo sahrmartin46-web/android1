@@ -1,0 +1,5 @@
+- `[x]` Add Socket.IO dependency to `app/build.gradle.kts`
+- `[x]` Create `LiveSocketManager.kt` client wrapper for Socket.IO
+- `[x]` Update `GoLiveStudioActivity.kt` to initialize socket and handle live room events
+- `[x]` Update `LiveViewerActivity.kt` to connect socket, send chat, and display join/gift notifications
+- `[/]` Verify build with `gradle_build`
