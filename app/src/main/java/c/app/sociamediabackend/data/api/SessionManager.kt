@@ -16,8 +16,8 @@ class SessionManager(context: Context) {
         private const val KEY_USER_DATA = "user_data"
         private const val KEY_BASE_URL = "base_url"
         
-        // Default base URL uses 10.0.2.2 to connect to host machine's localhost from Android emulators
-        const val DEFAULT_BASE_URL = "http://10.0.2.2:5000/api/"
+        // Default base URL for Sevalla deployment
+        const val DEFAULT_BASE_URL = "https://proud-gray-gecko-0tqwb.ext.sevalla.app/api/"
     }
 
     fun saveAuthToken(token: String) {
