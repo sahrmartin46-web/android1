@@ -1,5 +1,11 @@
 # FUGEN Deployment Guide
 
+## Sevalla Cloud Deployment
+
+- **Sevalla App ID**: `4fed556d-25ba-4b06-8b91-6a9e2917d7fe`
+- **Sevalla Public URL**: `https://proud-gray-gecko-0tqwb.ext.sevalla.app`
+- **Storage / Backup Bucket**: `proud-gray-gecko-backups-vkgy5/` (Cloudflare R2)
+
 ## Production Deployment Checklist
 
 1. **Infrastructure (Docker)**:
