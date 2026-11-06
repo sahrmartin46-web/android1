@@ -11,7 +11,8 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
-    "prisma:seed": "node prisma/seedGifts.js"
+    "prisma:seed": "node prisma/seedGifts.js",
+    "postinstall": "prisma generate"
   },
   "keywords": [
     "social",
