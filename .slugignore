@@ -1,0 +1,14 @@
+app/
+ios/
+apps/
+gradle/
+gradlew
+gradlew.bat
+build.gradle.kts
+settings.gradle.kts
+gradle.properties
+.gradle/
+.kotlin/
+.idea/
+docker/
+.artifacts/
