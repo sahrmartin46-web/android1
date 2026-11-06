@@ -9,7 +9,6 @@ import java.net.URISyntaxException
 
 object LiveSocketManager {
     private const val TAG = "LiveSocketManager"
-    private const val SOCKET_URL = "http://10.0.2.2:5000"
     private var socket: Socket? = null
 
     fun connect(context: Context, onConnected: () -> Unit = {}) {

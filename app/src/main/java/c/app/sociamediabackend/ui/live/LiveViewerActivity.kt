@@ -45,7 +45,11 @@ class LiveViewerActivity : AppCompatActivity() {
         binding.tvViewerHostName.text = "@$hostName"
 
         setupLiveGrid()
-        val streamUrl = intent.getStringExtra("STREAM_URL") ?: "http://10.0.2.2:5000/live/$streamId/index.mpd"
+        val sessionManager = SessionManager(this)
+        val baseUrl = sessionManager.getBaseUrl()
+        val serverHostUrl = if (baseUrl.endsWith("/api/")) baseUrl.substringBefore("/api/") else baseUrl
+        val defaultStreamUrl = "$serverHostUrl/live/$streamId/index.mpd"
+        val streamUrl = intent.getStringExtra("STREAM_URL") ?: defaultStreamUrl
         setupLiveStreamPlayback(streamUrl)
 
         if (streamId.isNotEmpty()) {
