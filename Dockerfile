@@ -12,4 +12,4 @@ RUN npx prisma generate
 ENV PORT=5000
 EXPOSE 5000
 
-CMD ["node", "src/server.js"]
+CMD ["sh", "-c", "npx prisma db push && node src/server.js"]
