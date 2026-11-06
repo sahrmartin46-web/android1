@@ -1,3 +1,5 @@
 {
+  "builder": "nodejs",
+  "buildpacks": ["nodejs"],
   "start": "node src/server.js"
 }
