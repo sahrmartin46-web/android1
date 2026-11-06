@@ -136,7 +136,14 @@ async function startServer() {
     try {
         await prisma.$connect();
         console.log("Database connected");
+    } catch (error) {
+        console.warn(
+            "Warning: Database connection failed on startup (will retry on requests):",
+            error.message
+        );
+    }
 
+    try {
         if (nms) {
             try {
                 nms.run();
@@ -154,13 +161,8 @@ async function startServer() {
                 `Server running at http://localhost:${PORT} with compression enabled (Socket.IO active)`
             );
         });
-
     } catch (error) {
-        console.error(
-            "Failed to connect to database:",
-            error
-        );
-
+        console.error("Failed to start HTTP server:", error);
         process.exit(1);
     }
 }
