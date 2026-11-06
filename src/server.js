@@ -6,7 +6,6 @@ const { initSocket } = require("./lib/socket");
 const cors = require("cors");
 const compression = require("compression");
 const path = require("path");
-const NodeMediaServer = require("node-media-server");
 
 const prisma = require("./lib/prisma");
 
@@ -109,30 +108,43 @@ app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 5000;
 
-const nmsConfig = {
-    rtmp: {
-        port: 1935,
-        chunk_size: 60000,
-        gop_cache: true,
-        ping: 30,
-        ping_timeout: 60
-    },
-    http: {
-        port: 8000,
-        mediaroot: path.join(__dirname, "../media"),
-        allow_origin: "*"
+let nms = null;
+try {
+    if (process.env.ENABLE_RTMP === "true") {
+        const NodeMediaServer = require("node-media-server");
+        const nmsConfig = {
+            rtmp: {
+                port: parseInt(process.env.RTMP_PORT || "1935", 10),
+                chunk_size: 60000,
+                gop_cache: true,
+                ping: 30,
+                ping_timeout: 60
+            },
+            http: {
+                port: parseInt(process.env.RTMP_HTTP_PORT || "8000", 10),
+                mediaroot: path.join(__dirname, "../media"),
+                allow_origin: "*"
+            }
+        };
+        nms = new NodeMediaServer(nmsConfig);
     }
-};
-
-const nms = new NodeMediaServer(nmsConfig);
+} catch (e) {
+    console.warn("NodeMediaServer not initialized:", e.message);
+}
 
 async function startServer() {
     try {
         await prisma.$connect();
         console.log("Database connected");
 
-        nms.run();
-        console.log("RTMP Live Media Server running on rtmp://localhost:1935 & http://localhost:8000");
+        if (nms) {
+            try {
+                nms.run();
+                console.log("RTMP Live Media Server running");
+            } catch (err) {
+                console.warn("Failed to start NodeMediaServer:", err.message);
+            }
+        }
 
         const server = http.createServer(app);
         initSocket(server);
