@@ -1,0 +1,18 @@
+
+
+name: Deploy FUGEN Backend to Sevalla
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Sevalla deployment
+        run: |
+          curl --fail --silent --show-error \
+            -X POST "${{ secrets.SEVALLA_DEPLOY_HOOK_URL }}"
