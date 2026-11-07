@@ -1,0 +1,12 @@
+node_modules
+app
+ios
+build
+.gradle
+.git
+.idea
+.artifacts
+*.log
+.env
+docker
+docs
