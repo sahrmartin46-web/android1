@@ -1,19 +1,17 @@
 # Sevalla Deployment Troubleshooting Guide
 
-If your deployment on Sevalla failed, check the following common causes and solutions:
+## PostgreSQL connection
 
-## 1. Missing Prisma Client Generation (`prisma generate`)
-- **Issue**: Cloud platforms run `npm install` during build, but Prisma Client is not generated unless a `postinstall` script runs.
-- **Solution**: We added `"postinstall": "prisma generate"` to `package.json` so Prisma generates the client automatically upon dependency installation.
+The Prisma schema reads the PostgreSQL connection from `DB_URL`. In the hosting platform, attach the managed PostgreSQL database to the application using its **internal** connection. The platform should inject `DB_URL` into the app environment.
 
-## 2. Missing Environment Variables in Sevalla Dashboard
-Ensure the following environment variables are added in your Sevalla app dashboard under **Environment Variables**:
-- `DATABASE_URL` = `file:./dev.db` (or your production PostgreSQL URL)
-- `JWT_SECRET` = `<your-secure-jwt-secret>`
-- `PORT` = `5000` (or leave default assigned by Sevalla)
-- `STORAGE_BASE_URL` = `https://f6d1d15e6f0b37b4b8fcad3c41a7922d.r2.cloudflarestorage.com`
-- `BACKUP_BUCKET` = `proud-gray-gecko-backups-vkgy5/`
+The configured database is PostgreSQL 17 in Ashburn (`us-ashburn-1`). Its internal host is `proud-gray-gecko-0tqwb-postgresql.proud-gray-gecko-0tqwb.svc.cluster.local`, port `5432`, database `proud-gray-gecko`, and user `nimble-black-seal`. Use the platform-provided internal connection string; the password is secret and must not be committed to this repository.
 
-## 3. Correct Build & Start Commands in Sevalla
-- **Build Command**: Leave empty or `npm install`
-- **Start Command**: `npm start`
+## Required application environment variables
+
+- `DB_URL`: injected by the platform's internal PostgreSQL connection.
+- `JWT_SECRET`: set a strong random secret in the hosting platform.
+- `PORT`: use the port assigned by the hosting platform, or `5000` when configured there.
+
+## Container startup
+
+The Docker image generates the Prisma client during build. At runtime it runs `npx prisma db push` and then starts the Node.js server. Ensure the app has the database attached and `DB_URL` available before deployment.
