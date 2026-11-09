@@ -5,7 +5,6 @@ WORKDIR /usr/src/app
 # 1) Install dependencies only after Prisma files are available
 COPY package*.json ./
 COPY prisma ./prisma
-COPY prisma.config.ts ./
 
 # Optional build-time placeholder only for generation
 ARG DB_URL=postgresql://postgres:postgres@localhost:5432/app?schema=public
