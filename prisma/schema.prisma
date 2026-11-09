@@ -8,3 +8,504 @@ datasource db {
 }
 
 model User {
+  id                  String               @id @default(cuid())
+  username            String               @unique
+  email               String               @unique
+  passwordHash        String
+  displayName         String?
+  bio                 String?
+  avatarUrl           String?
+  coverUrl            String?
+  isVerified          Boolean              @default(false)
+  role                String               @default("USER")
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  posts               Post[]
+  comments            Comment[]
+  likes               Like[]
+  followers           Follow[]             @relation("followers")
+  following           Follow[]             @relation("following")
+  liveSessions        LiveSession[]        @relation("HostLives")
+  participants        LiveParticipant[]
+  guestRequests       GuestRequest[]       @relation("RequesterUsers")
+  wallet              Wallet?
+  giftsSent           GiftTransaction[]    @relation("GiftsSent")
+  giftsReceived       GiftTransaction[]    @relation("GiftsReceived")
+  withdrawals         Withdrawal[]
+  enrollments         CreatorEnrollment[]
+  liveComments        LiveComment[]
+  payments            Payment[]
+  moderatorActions    ModerationAction[]   @relation("ModeratorActions")
+  targetUserActions   ModerationAction[]   @relation("TargetUserActions")
+  userBlocks          BlockedUser[]        @relation("UserBlocks")
+  blockedUsers        BlockedUser[]        @relation("BlockedUsers")
+  settings            UserSettings?
+  sessions            UserSession[]
+  keywordFilters      KeywordFilter[]
+  bankAccounts        BankAccount[]
+  @@index([username])
+  @@index([email])
+}
+
+model Post {
+  id        String    @id @default(cuid())
+  content   String
+  imageUrl  String?
+  videoUrl  String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  authorId  String
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  likes     Like[]
+  comments  Comment[]
+  @@index([authorId])
+  @@index([createdAt])
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  userId    String
+  postId    String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  @@unique([userId, postId])
+  @@index([postId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  userId    String
+  postId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  @@index([postId])
+  @@index([userId])
+}
+
+model Follow {
+  id          String   @id @default(cuid())
+  followerId  String
+  followingId String
+  createdAt   DateTime @default(now())
+  follower    User     @relation("following", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User     @relation("followers", fields: [followingId], references: [id], onDelete: Cascade)
+  @@unique([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
+}
+
+model LiveSession {
+  id                    String             @id @default(cuid())
+  hostId                String
+  host                  User               @relation("HostLives", fields: [hostId], references: [id], onDelete: Cascade)
+  title                 String
+  description           String?
+  category              String             @default("Gaming")
+  coverUrl              String?
+  roomName              String?
+  status                String             @default("SCHEDULED")
+  layout                String             @default("SIDE_BY_SIDE")
+  maxGuests             Int                @default(8)
+  autoAcceptGuests      Boolean            @default(false)
+  commentsEnabled       Boolean            @default(true)
+  giftsEnabled          Boolean            @default(true)
+  likesEnabled          Boolean            @default(true)
+  guestRequestsEnabled  Boolean            @default(true)
+  spotlightParticipantId String?
+  startedAt             DateTime?
+  endedAt               DateTime?
+  peakViewers           Int                @default(0)
+  totalViewers          Int                @default(0)
+  totalLikes            Int                @default(0)
+  totalComments         Int                @default(0)
+  totalShares           Int                @default(0)
+  totalDiamonds         Int                @default(0)
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+  participants          LiveParticipant[]
+  guestRequests         GuestRequest[]
+  comments              LiveComment[]
+  gifts                 GiftTransaction[]
+  polls                 LivePoll[]
+  questions             LiveQuestion[]
+  matches               LiveMatch[]        @relation("HostMatches")
+  goals                 LiveGoal[]
+  moderationActions     ModerationAction[]
+  liveSettings          LiveSetting?
+  @@index([hostId])
+  @@index([status])
+  @@index([category])
+  @@index([createdAt])
+}
+
+model LiveParticipant {
+  id                String      @id @default(cuid())
+  liveSessionId     String
+  userId            String
+  role              String      @default("VIEWER")
+  status            String      @default("CONNECTED")
+  joinedAt          DateTime    @default(now())
+  leftAt            DateTime?
+  removedAt         DateTime?
+  cameraEnabled     Boolean     @default(true)
+  microphoneEnabled Boolean     @default(true)
+  canPublish        Boolean     @default(false)
+  canSubscribe      Boolean     @default(true)
+  liveSession       LiveSession @relation(fields: [liveSessionId], references: [id], onDelete: Cascade)
+  user              User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([liveSessionId, userId])
+  @@index([liveSessionId, role])
+  @@index([status])
+}
+
+model GuestRequest {
+  id            String      @id @default(cuid())
+  liveSessionId String
+  requesterId   String
+  status        String      @default("PENDING")
+  respondedBy   String?
+  respondedAt   DateTime?
+  createdAt     DateTime    @default(now())
+  liveSession   LiveSession @relation(fields: [liveSessionId], references: [id], onDelete: Cascade)
+  requester     User        @relation("RequesterUsers", fields: [requesterId], references: [id], onDelete: Cascade)
+  @@index([liveSessionId, status])
+  @@index([requesterId])
+}
+
+model LiveComment {
+  id        String      @id @default(cuid())
+  liveId    String
+  userId    String
+  text      String
+  isPinned  Boolean     @default(false)
+  isDeleted Boolean     @default(false)
+  createdAt DateTime    @default(now())
+  live      LiveSession @relation(fields: [liveId], references: [id], onDelete: Cascade)
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([liveId, createdAt])
+  @@index([userId])
+}
+
+model Gift {
+  id           String            @id @default(cuid())
+  name         String
+  slug         String            @unique
+  iconUrl      String
+  coinCost     Int
+  category     String            @default("Love")
+  isActive     Boolean           @default(true)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  transactions GiftTransaction[]
+}
+
+model GiftTransaction {
+  id             String      @id @default(cuid())
+  liveId         String
+  giftId         String
+  senderId       String
+  receiverId     String
+  quantity       Int         @default(1)
+  coinCost       Int
+  totalCoins     Int
+  diamondsEarned Int
+  createdAt      DateTime    @default(now())
+  live           LiveSession @relation(fields: [liveId], references: [id], onDelete: Cascade)
+  gift           Gift        @relation(fields: [giftId], references: [id], onDelete: Cascade)
+  sender         User        @relation("GiftsSent", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver       User        @relation("GiftsReceived", fields: [receiverId], references: [id], onDelete: Cascade)
+  @@index([liveId, createdAt])
+  @@index([senderId])
+  @@index([receiverId])
+}
+
+model Wallet {
+  id             String              @id @default(cuid())
+  userId         String              @unique
+  coinBalance    Int                 @default(1000)
+  diamondBalance Int                 @default(0)
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  user           User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions   WalletTransaction[]
+  ledgers        WalletLedger[]
+}
+
+model WalletTransaction {
+  id          String   @id @default(cuid())
+  walletId    String
+  type        String
+  status      String   @default("COMPLETED")
+  amount      Int
+  currency    String   @default("COINS")
+  referenceId String?
+  description String?
+  createdAt   DateTime @default(now())
+  wallet      Wallet   @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  @@index([walletId, createdAt])
+}
+
+model CoinPackage {
+  id         String   @id @default(cuid())
+  name       String
+  coins      Int
+  priceMinor Int
+  currency   String   @default("USD")
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+}
+
+model Withdrawal {
+  id               String   @id @default(cuid())
+  userId           String
+  amountUsd        Float
+  diamondsDeducted Int
+  status           String   @default("COMPLETED")
+  payoutProvider   String
+  destination      String
+  createdAt        DateTime @default(now())
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId, createdAt])
+}
+
+model LivePoll {
+  id        String            @id @default(cuid())
+  liveId    String
+  question  String
+  active    Boolean           @default(true)
+  createdAt DateTime          @default(now())
+  live      LiveSession       @relation(fields: [liveId], references: [id], onDelete: Cascade)
+  options   LivePollOption[]
+}
+
+model LivePollOption {
+  id     String   @id @default(cuid())
+  pollId String
+  text   String
+  votes  Int      @default(0)
+  poll   LivePoll @relation(fields: [pollId], references: [id], onDelete: Cascade)
+}
+
+model LiveQuestion {
+  id        String      @id @default(cuid())
+  liveId    String
+  userId    String
+  question  String
+  answered  Boolean     @default(false)
+  pinned    Boolean     @default(false)
+  createdAt DateTime    @default(now())
+  live      LiveSession @relation(fields: [liveId], references: [id], onDelete: Cascade)
+  @@index([liveId, createdAt])
+}
+
+model LiveMatch {
+  id           String      @id @default(cuid())
+  hostStreamId String
+  oppStreamId  String
+  hostScore    Int         @default(0)
+  oppScore     Int         @default(0)
+  status       String      @default("ACTIVE")
+  durationSec  Int         @default(180)
+  createdAt    DateTime    @default(now())
+  hostSession  LiveSession @relation("HostMatches", fields: [hostStreamId], references: [id], onDelete: Cascade)
+}
+
+model LiveGoal {
+  id          String      @id @default(cuid())
+  liveId      String
+  title       String
+  target      Int
+  current     Int         @default(0)
+  completedAt DateTime?
+  live        LiveSession @relation(fields: [liveId], references: [id], onDelete: Cascade)
+}
+
+model MonetizationProgram {
+  id          String              @id @default(cuid())
+  title       String              @unique
+  icon        String
+  category    String
+  payoutRate  String
+  description String
+  requirement String
+  isActive    Boolean             @default(true)
+  createdAt   DateTime            @default(now())
+  enrollments CreatorEnrollment[]
+}
+
+model CreatorEnrollment {
+  id         String              @id @default(cuid())
+  userId     String
+  programId  String
+  status     String              @default("APPROVED")
+  enrolledAt DateTime            @default(now())
+  user       User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  program    MonetizationProgram @relation(fields: [programId], references: [id], onDelete: Cascade)
+  @@unique([userId, programId])
+}
+
+model ArtistTrack {
+  id           String   @id @default(cuid())
+  trackTitle   String
+  artistName   String
+  coverUrl     String?
+  payoutPerUse Float    @default(50.00)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+}
+
+model WalletLedger {
+  id          String   @id @default(cuid())
+  walletId    String
+  type        String
+  status      String   @default("COMPLETED")
+  amount      Int
+  currency    String   @default("COINS")
+  referenceId String?
+  description String?
+  createdAt   DateTime @default(now())
+  wallet      Wallet   @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  @@index([walletId, createdAt])
+}
+
+model Payment {
+  id            String   @id @default(cuid())
+  userId        String
+  amount        Float
+  currency      String   @default("USD")
+  status        String   @default("PENDING")
+  provider      String   @default("STRIPE")
+  transactionId String?  @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId])
+}
+
+model PaymentWebhookEvent {
+  id        String   @id @default(cuid())
+  eventId   String   @unique
+  provider  String   @default("STRIPE")
+  eventType String
+  payload   String
+  processed Boolean  @default(true)
+  createdAt DateTime @default(now())
+  @@index([eventId])
+}
+
+model ModerationAction {
+  id            String      @id @default(cuid())
+  liveSessionId String
+  moderatorId   String
+  targetUserId  String
+  actionType    String
+  reason        String?
+  createdAt     DateTime    @default(now())
+  liveSession   LiveSession @relation(fields: [liveSessionId], references: [id], onDelete: Cascade)
+  moderator     User        @relation("ModeratorActions", fields: [moderatorId], references: [id], onDelete: Cascade)
+  targetUser    User        @relation("TargetUserActions", fields: [targetUserId], references: [id], onDelete: Cascade)
+  @@index([liveSessionId])
+}
+
+model LiveSetting {
+  id            String      @id @default(cuid())
+  liveSessionId String      @unique
+  key           String
+  value         String
+  updatedAt     DateTime    @updatedAt
+  liveSession   LiveSession @relation(fields: [liveSessionId], references: [id], onDelete: Cascade)
+}
+
+model BlockedUser {
+  id        String   @id @default(cuid())
+  userId    String
+  blockedId String
+  createdAt DateTime @default(now())
+  user      User     @relation("UserBlocks", fields: [userId], references: [id], onDelete: Cascade)
+  blocked   User     @relation("BlockedUsers", fields: [blockedId], references: [id], onDelete: Cascade)
+  @@unique([userId, blockedId])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  action    String
+  details   String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+  @@index([userId, createdAt])
+}
+
+model UserSettings {
+  id                          String   @id @default(cuid())
+  userId                      String   @unique
+  user                        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  isPrivateAccount            Boolean  @default(false)
+  postAudience                String   @default("EVERYONE")
+  commentPermission           String   @default("EVERYONE")
+  directMessagePermission     String   @default("EVERYONE")
+  duetPermission              String   @default("EVERYONE")
+  stitchPermission            String   @default("EVERYONE")
+  downloadPermission          String   @default("EVERYONE")
+  mentionPermission           String   @default("EVERYONE")
+  pushNotificationsEnabled    Boolean  @default(true)
+  likesNotification           Boolean  @default(true)
+  commentsNotification        Boolean  @default(true)
+  newFollowersNotification    Boolean  @default(true)
+  directMessagesNotification  Boolean  @default(true)
+  liveAlertsNotification      Boolean  @default(true)
+  quietHoursEnabled           Boolean  @default(false)
+  quietHoursStart             String?  @default("22:00")
+  quietHoursEnd               String?  @default("07:00")
+  dataSaverEnabled            Boolean  @default(false)
+  autoplayCellular             Boolean  @default(true)
+  appLanguage                 String   @default("en")
+  screenTimeLimitMinutes      Int      @default(0)
+  restrictedMode              Boolean  @default(false)
+  liveGuestPermission         String   @default("EVERYONE")
+  updatedAt                   DateTime @updatedAt
+}
+
+model UserSession {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deviceName String   @default("Android Device")
+  deviceType String   @default("ANDROID")
+  ipAddress  String?  @default("127.0.0.1")
+  lastActive DateTime @default(now())
+  isCurrent  Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  @@index([userId])
+}
+
+model KeywordFilter {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  keyword   String
+  createdAt DateTime @default(now())
+  @@unique([userId, keyword])
+  @@index([userId])
+}
+
+model BankAccount {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  region        String
+  accountHolder String
+  bankName      String
+  accountNumber String
+  routingNumber String?
+  iban          String?
+  swiftBic      String?
+  isPrimary     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  @@index([userId])
+}
