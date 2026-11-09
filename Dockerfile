@@ -2,18 +2,24 @@ FROM node:22-alpine
 
 WORKDIR /usr/src/app
 
-# Prisma's install hook needs the schema available before npm ci runs.
+# 1) Install dependencies only after Prisma files are available
 COPY package*.json ./
-COPY prisma/schema.prisma ./prisma/schema.prisma
+COPY prisma ./prisma
 COPY prisma.config.ts ./
-RUN npm ci
 
+# Optional build-time placeholder only for generation
+ARG DB_URL=postgresql://postgres:postgres@localhost:5432/app?schema=public
+ENV DB_URL=$DB_URL
+
+RUN npm install --include=dev
+
+# 2) Copy the rest of the app
 COPY . .
+
+# 3) Generate Prisma client explicitly after all files exist
 RUN npx prisma generate
 
 ENV PORT=5000
 EXPOSE 5000
 
-# The hosting platform must inject DB_URL at runtime. Do not bake credentials
-# into this image or commit them to the repository.
 CMD ["sh", "-c", "npx prisma db push && node src/server.js"]
