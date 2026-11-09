@@ -17,7 +17,7 @@ RUN npm install --include=dev
 COPY . .
 
 # 3) Generate Prisma client explicitly after all files exist
-RUN npx prisma generate
+RUN npm run prisma:generate
 
 ENV PORT=5000
 EXPOSE 5000
