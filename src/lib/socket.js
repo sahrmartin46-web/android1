@@ -1,10 +1,12 @@
 const { Server } = require("socket.io");
 const jwt = require("jsonwebtoken");
+const { createAdapter } = require("@socket.io/redis-adapter");
+const { createClient } = require("redis");
 const { LIVE_SOCKET_EVENTS } = require("../constants/liveEvents");
 
 let io = null;
 
-function initSocket(server) {
+async function initSocket(server) {
     io = new Server(server, {
         cors: {
             origin: "*",
@@ -12,7 +14,19 @@ function initSocket(server) {
         }
     });
 
-    // Socket.io JWT Authentication Middleware (Section 30)
+    if (process.env.REDIS_URL) {
+        try {
+            const pubClient = createClient({ url: process.env.REDIS_URL });
+            const subClient = pubClient.duplicate();
+            await Promise.all([pubClient.connect(), subClient.connect()]);
+            io.adapter(createAdapter(pubClient, subClient));
+            console.log("Socket.IO Redis adapter connected successfully for multi-instance scaling.");
+        } catch (err) {
+            console.error("Failed to connect Socket.IO Redis adapter:", err.message);
+        }
+    }
+
+    // Socket.io JWT Authentication Middleware
     io.use((socket, next) => {
         const token = socket.handshake.auth?.token || socket.handshake.headers?.authorization?.split(" ")[1];
 
@@ -33,10 +47,8 @@ function initSocket(server) {
     io.on("connection", (socket) => {
         console.log(`Authenticated socket connected: ${socket.id} (User: ${socket.user.userId})`);
 
-        // Canonical user room: user:{userId}
         socket.join(`user:${socket.user.userId}`);
 
-        // Canonical rooms enforcement (Section 29) - do not accept arbitrary client-defined room names
         socket.on("live.join", (data) => {
             const { liveId, liveSessionId } = data || {};
             const targetLiveId = liveId || liveSessionId;
