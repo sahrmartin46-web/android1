@@ -54,7 +54,12 @@ class SessionManager(context: Context) {
     }
 
     fun getBaseUrl(): String {
-        return prefs.getString(KEY_BASE_URL, DEFAULT_BASE_URL) ?: DEFAULT_BASE_URL
+        val saved = prefs.getString(KEY_BASE_URL, DEFAULT_BASE_URL) ?: DEFAULT_BASE_URL
+        if (saved.contains("localhost") || saved.contains("127.0.0.1") || saved.contains("10.0.2.2")) {
+            saveBaseUrl(DEFAULT_BASE_URL)
+            return DEFAULT_BASE_URL
+        }
+        return saved
     }
 
     fun isLoggedIn(): Boolean {
