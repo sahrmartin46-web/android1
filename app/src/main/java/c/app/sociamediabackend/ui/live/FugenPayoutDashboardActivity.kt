@@ -21,6 +21,18 @@ class FugenPayoutDashboardActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFugenPayoutDashboardBinding
     private lateinit var repository: SettingsRepository
+    private val apiService by lazy { ApiClient.getService(this) }
+
+    companion object {
+        private val REGION_LABELS = arrayOf(
+            "US (United States - ACH)",
+            "EU (Eurozone - SEPA)",
+            "UK (United Kingdom - Sort)",
+            "CA (Canada - EFT)",
+            "GLOBAL (SWIFT)"
+        )
+        private val REGION_CODES = arrayOf("US", "EU", "UK", "CA", "GLOBAL")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,14 +47,11 @@ class FugenPayoutDashboardActivity : AppCompatActivity() {
             insets
         }
 
-        repository = SettingsRepository(ApiClient.getService(this))
+        repository = SettingsRepository(apiService)
 
         binding.toolbar.setNavigationOnClickListener { finish() }
 
-        binding.btnWithdrawBank.setOnClickListener {
-            showAddBankAccountDialog()
-        }
-
+        binding.btnWithdrawBank.setOnClickListener { showAddBankAccountDialog() }
         binding.btnAnalytics.setOnClickListener {
             startActivity(Intent(this, CreatorAnalyticsActivity::class.java))
         }
@@ -54,14 +63,14 @@ class FugenPayoutDashboardActivity : AppCompatActivity() {
     private fun loadTreasuryBalance() {
         lifecycleScope.launch {
             try {
-                val res = ApiClient.getService(this@FugenPayoutDashboardActivity).getWallet()
+                val res = apiService.getWallet()
                 if (res.isSuccessful && res.body()?.success == true) {
                     val wallet = res.body()?.wallet
                     val diamonds = wallet?.diamondBalance ?: 0
                     val usdEst = diamonds / 200.0
                     binding.tvAvailableCapital.text = "$${String.format("%,.2f", usdEst + 14820.50)} USD"
                 }
-            } catch (ignored: Exception) {
+            } catch (_: Exception) {
                 // Fallback default
             }
         }
@@ -73,10 +82,14 @@ class FugenPayoutDashboardActivity : AppCompatActivity() {
                 is NetworkResult.Success -> {
                     val accounts = res.data.bankAccounts
                     if (accounts.isNotEmpty()) {
-                        Toast.makeText(this@FugenPayoutDashboardActivity, "Loaded ${accounts.size} connected bank accounts", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@FugenPayoutDashboardActivity,
+                            "Loaded ${accounts.size} connected bank accounts",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
-                else -> {}
+                else -> Unit
             }
         }
     }
@@ -87,8 +100,6 @@ class FugenPayoutDashboardActivity : AppCompatActivity() {
             setPadding(50, 20, 50, 20)
         }
 
-        val regions = arrayOf("US (United States - ACH)", "EU (Eurozone - SEPA)", "UK (United Kingdom - Sort)", "CA (Canada - EFT)", "GLOBAL (SWIFT)")
-        val regionCodes = arrayOf("US", "EU", "UK", "CA", "GLOBAL")
         var selectedRegionIndex = 0
 
         val etHolder = EditText(this).apply { hint = "Account Holder Full Name" }
@@ -103,7 +114,7 @@ class FugenPayoutDashboardActivity : AppCompatActivity() {
 
         MaterialAlertDialogBuilder(this)
             .setTitle("🏦 Link Real Bank Account")
-            .setSingleChoiceItems(regions, 0) { _, which ->
+            .setSingleChoiceItems(REGION_LABELS, 0) { _, which ->
                 selectedRegionIndex = which
             }
             .setView(layout)
@@ -112,22 +123,27 @@ class FugenPayoutDashboardActivity : AppCompatActivity() {
                 val bankName = etBankName.text.toString().trim()
                 val accountNum = etAccountNumber.text.toString().trim()
                 val routing = etRouting.text.toString().trim()
-                val region = regionCodes[selectedRegionIndex]
+                val region = REGION_CODES[selectedRegionIndex]
 
                 if (holder.isEmpty() || bankName.isEmpty() || accountNum.isEmpty()) {
                     Toast.makeText(this, "Please fill in all required bank details", Toast.LENGTH_SHORT).show()
                     return@setPositiveButton
                 }
 
-                val data = mutableMapOf<String, Any>(
+                val data = linkedMapOf<String, Any>(
                     "region" to region,
                     "accountHolder" to holder,
                     "bankName" to bankName,
                     "accountNumber" to accountNum,
                     "isPrimary" to true
                 )
+
                 if (routing.isNotEmpty()) {
-                    if (region == "EU") data["iban"] = routing else data["routingNumber"] = routing
+                    if (region == "EU") {
+                        data["iban"] = routing
+                    } else {
+                        data["routingNumber"] = routing
+                    }
                 }
 
                 lifecycleScope.launch {
@@ -137,7 +153,7 @@ class FugenPayoutDashboardActivity : AppCompatActivity() {
                             loadBankAccounts()
                         }
                         is NetworkResult.Error -> Toast.makeText(this@FugenPayoutDashboardActivity, res.message, Toast.LENGTH_LONG).show()
-                        else -> Toast.makeText(this@FugenPayoutDashboardActivity, "Failed to link bank account", Toast.LENGTH_SHORT).show()
+                        is NetworkResult.Exception -> Toast.makeText(this@FugenPayoutDashboardActivity, "Failed to link bank account", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
