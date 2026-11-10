@@ -22,6 +22,7 @@ class FugenPayoutDashboardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFugenPayoutDashboardBinding
     private lateinit var repository: SettingsRepository
     private val apiService by lazy { ApiClient.getService(this) }
+    private var isSubmittingBankAccount = false
 
     companion object {
         private val REGION_LABELS = arrayOf(
@@ -50,7 +51,6 @@ class FugenPayoutDashboardActivity : AppCompatActivity() {
         repository = SettingsRepository(apiService)
 
         binding.toolbar.setNavigationOnClickListener { finish() }
-
         binding.btnWithdrawBank.setOnClickListener { showAddBankAccountDialog() }
         binding.btnAnalytics.setOnClickListener {
             startActivity(Intent(this, CreatorAnalyticsActivity::class.java))
@@ -71,7 +71,7 @@ class FugenPayoutDashboardActivity : AppCompatActivity() {
                     binding.tvAvailableCapital.text = "$${String.format("%,.2f", usdEst + 14820.50)} USD"
                 }
             } catch (_: Exception) {
-                // Fallback default
+                // Keep the existing value if the request fails.
             }
         }
     }
@@ -101,7 +101,6 @@ class FugenPayoutDashboardActivity : AppCompatActivity() {
         }
 
         var selectedRegionIndex = 0
-
         val etHolder = EditText(this).apply { hint = "Account Holder Full Name" }
         val etBankName = EditText(this).apply { hint = "Bank Name (e.g. Chase, Deutsche Bank)" }
         val etAccountNumber = EditText(this).apply { hint = "Account Number / IBAN" }
@@ -129,6 +128,7 @@ class FugenPayoutDashboardActivity : AppCompatActivity() {
                     Toast.makeText(this, "Please fill in all required bank details", Toast.LENGTH_SHORT).show()
                     return@setPositiveButton
                 }
+                if (isSubmittingBankAccount) return@setPositiveButton
 
                 val data = linkedMapOf<String, Any>(
                     "region" to region,
@@ -137,23 +137,23 @@ class FugenPayoutDashboardActivity : AppCompatActivity() {
                     "accountNumber" to accountNum,
                     "isPrimary" to true
                 )
-
                 if (routing.isNotEmpty()) {
-                    if (region == "EU") {
-                        data["iban"] = routing
-                    } else {
-                        data["routingNumber"] = routing
-                    }
+                    data[if (region == "EU") "iban" else "routingNumber"] = routing
                 }
 
+                isSubmittingBankAccount = true
                 lifecycleScope.launch {
-                    when (val res = repository.addBankAccount(data)) {
-                        is NetworkResult.Success -> {
-                            Toast.makeText(this@FugenPayoutDashboardActivity, "Bank account successfully linked!", Toast.LENGTH_LONG).show()
-                            loadBankAccounts()
+                    try {
+                        when (val res = repository.addBankAccount(data)) {
+                            is NetworkResult.Success -> {
+                                Toast.makeText(this@FugenPayoutDashboardActivity, "Bank account successfully linked!", Toast.LENGTH_LONG).show()
+                                loadBankAccounts()
+                            }
+                            is NetworkResult.Error -> Toast.makeText(this@FugenPayoutDashboardActivity, res.message, Toast.LENGTH_LONG).show()
+                            is NetworkResult.Exception -> Toast.makeText(this@FugenPayoutDashboardActivity, "Failed to link bank account", Toast.LENGTH_SHORT).show()
                         }
-                        is NetworkResult.Error -> Toast.makeText(this@FugenPayoutDashboardActivity, res.message, Toast.LENGTH_LONG).show()
-                        is NetworkResult.Exception -> Toast.makeText(this@FugenPayoutDashboardActivity, "Failed to link bank account", Toast.LENGTH_SHORT).show()
+                    } finally {
+                        isSubmittingBankAccount = false
                     }
                 }
             }

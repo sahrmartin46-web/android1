@@ -1,18 +1,22 @@
 const { Server } = require("socket.io");
 const jwt = require("jsonwebtoken");
-const { LIVE_SOCKET_EVENTS } = require("../constants/liveEvents");
 
 let io = null;
 
-function initSocket(server) {
+function initSocket(server, options = {}) {
+    const { adapter, corsOrigin = "*", ...socketOptions } = options;
     io = new Server(server, {
+        ...socketOptions,
         cors: {
-            origin: "*",
+            origin: corsOrigin,
             methods: ["GET", "POST"]
         }
     });
 
-    // Socket.io JWT Authentication Middleware (Section 30)
+    // Optional adapter hook (for example, a Redis adapter) allows room broadcasts
+    // to span multiple server processes without coupling this module to a provider.
+    if (adapter) io.adapter(adapter);
+
     io.use((socket, next) => {
         const token = socket.handshake.auth?.token || socket.handshake.headers?.authorization?.split(" ")[1];
 
@@ -31,24 +35,14 @@ function initSocket(server) {
     });
 
     io.on("connection", (socket) => {
-        console.log(`Authenticated socket connected: ${socket.id} (User: ${socket.user.userId})`);
-
-        // Canonical user room: user:{userId}
         socket.join(`user:${socket.user.userId}`);
 
-        // Canonical rooms enforcement (Section 29) - do not accept arbitrary client-defined room names
         socket.on("live.join", (data) => {
             const { liveId, liveSessionId } = data || {};
             const targetLiveId = liveId || liveSessionId;
             if (targetLiveId) {
-                const liveRoom = `live:${targetLiveId}`;
-                socket.join(liveRoom);
-                console.log(`Socket ${socket.id} joined canonical room ${liveRoom}`);
+                socket.join(`live:${targetLiveId}`);
             }
-        });
-
-        socket.on("disconnect", () => {
-            console.log(`Socket disconnected: ${socket.id}`);
         });
     });
 

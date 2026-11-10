@@ -7,7 +7,13 @@ router.get("/maya-profile", async (req, res) => {
     try {
         let user = await prisma.user.findUnique({
             where: { username: "maya.creates" },
-            include: { posts: true, followers: true, following: true }
+            select: {
+                username: true,
+                displayName: true,
+                bio: true,
+                isVerified: true,
+                avatarUrl: true
+            }
         });
 
         if (!user) {
@@ -21,14 +27,20 @@ router.get("/maya-profile", async (req, res) => {
                     isVerified: true,
                     role: "CREATOR"
                 },
-                include: { posts: true, followers: true, following: true }
+                select: {
+                    username: true,
+                    displayName: true,
+                    bio: true,
+                    isVerified: true,
+                    avatarUrl: true
+                }
             });
         }
 
         const posts = await prisma.post.findMany({
             orderBy: { createdAt: "desc" },
             take: 12,
-            include: { author: true, likes: true, comments: true }
+            select: { id: true, imageUrl: true, videoUrl: true }
         });
 
         res.json({
@@ -67,7 +79,11 @@ router.get("/sound-details", async (req, res) => {
         const posts = await prisma.post.findMany({
             orderBy: { createdAt: "desc" },
             take: 6,
-            include: { author: true }
+            select: {
+                id: true,
+                imageUrl: true,
+                author: { select: { username: true } }
+            }
         });
 
         res.json({
