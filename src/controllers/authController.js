@@ -22,11 +22,6 @@ const registerSchema = z.object({
         .optional()
 });
 
-const loginSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(1)
-});
-
 function createToken(user) {
     const secret = process.env.JWT_SECRET || "default_jwt_secret";
     return jwt.sign(
@@ -102,30 +97,41 @@ async function register(req, res, next) {
 
 async function login(req, res, next) {
     try {
-        const data = loginSchema.parse(req.body);
+        const identifier = (req.body.email || req.body.username || req.body.identifier || "").trim();
+        const password = req.body.password;
 
-        const user = await prisma.user.findUnique({
+        if (!identifier || !password) {
+            return res.status(400).json({
+                success: false,
+                message: "Email/Username and password are required"
+            });
+        }
+
+        const user = await prisma.user.findFirst({
             where: {
-                email: data.email.toLowerCase()
+                OR: [
+                    { email: identifier.toLowerCase() },
+                    { username: identifier }
+                ]
             }
         });
 
         if (!user) {
             return res.status(401).json({
                 success: false,
-                message: "Invalid email or password"
+                message: "Invalid email/username or password"
             });
         }
 
         const validPassword = await bcrypt.compare(
-            data.password,
+            password,
             user.passwordHash
         );
 
         if (!validPassword) {
             return res.status(401).json({
                 success: false,
-                message: "Invalid email or password"
+                message: "Invalid email/username or password"
             });
         }
 
