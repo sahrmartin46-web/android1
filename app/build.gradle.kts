@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    namespace = "c.app.sociamediabackend"
+    namespace = "fugenvideoplatform.app"
     compileSdk = 37
 
     ndkVersion = "27.0.12077973"
 
     defaultConfig {
-        applicationId = "c.app.sociamediabackend"
+        applicationId = "fugenvideoplatform.app"
         minSdk = 30
         targetSdk = 37
         versionCode = 1

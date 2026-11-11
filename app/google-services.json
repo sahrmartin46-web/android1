@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1057331454316",
+    "firebase_url": "https://main-eb27d-default-rtdb.firebaseio.com",
+    "project_id": "main-eb27d",
+    "storage_bucket": "main-eb27d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1057331454316:android:f6c17c83ab0268b9a0d349",
+        "android_client_info": {
+          "package_name": "fugenvideoplatform.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1057331454316-rqu6o0id5oa6ii6sd91uoqu2mvhh0i7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnl5m0T7EWePZGLbiXr7CUxNvMUuhmPIY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1057331454316-rqu6o0id5oa6ii6sd91uoqu2mvhh0i7g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
