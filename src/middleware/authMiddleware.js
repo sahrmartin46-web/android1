@@ -41,7 +41,6 @@ async function authMiddleware(req, res, next) {
                 });
 
                 if (!user) {
-                    // Auto-create user profile linked to Firebase UID
                     const baseUsername = email.split("@")[0].replace(/[^a-zA-Z0-9_]/g, "") || `user_${Date.now()}`;
                     const uniqueUsername = `${baseUsername}_${Math.floor(1000 + Math.random() * 9000)}`;
 
@@ -56,7 +55,6 @@ async function authMiddleware(req, res, next) {
                         }
                     });
                 } else if (!user.firebaseUid) {
-                    // Link existing email user to Firebase UID
                     user = await prisma.user.update({
                         where: { id: user.id },
                         data: { firebaseUid: firebaseUid }
@@ -74,7 +72,7 @@ async function authMiddleware(req, res, next) {
                 return next();
             }
         } catch (firebaseErr) {
-            // Token is not a valid Firebase ID Token; proceed to legacy JWT check
+            // Proceed to legacy JWT check
         }
 
         // 2. Fallback to Legacy JWT verification

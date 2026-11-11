@@ -3,15 +3,11 @@ const admin = require("firebase-admin");
 if (!admin.apps.length) {
     try {
         if (process.env.FIREBASE_SERVICE_ACCOUNT) {
-            let serviceAccount;
-            try {
-                serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-            } catch (e) {
-                serviceAccount = JSON.parse(Buffer.from(process.env.FIREBASE_SERVICE_ACCOUNT, 'base64').toString('utf8'));
-            }
+            const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
             admin.initializeApp({
                 credential: admin.credential.cert(serviceAccount)
             });
+            console.log("Firebase Admin initialized via FIREBASE_SERVICE_ACCOUNT JSON.");
         } else if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_CLIENT_EMAIL && process.env.FIREBASE_PRIVATE_KEY) {
             admin.initializeApp({
                 credential: admin.credential.cert({
@@ -20,23 +16,24 @@ if (!admin.apps.length) {
                     privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
                 })
             });
+            console.log("Firebase Admin initialized via individual environment variables.");
         } else {
             admin.initializeApp();
+            console.log("Firebase Admin initialized via Application Default Credentials.");
         }
     } catch (error) {
-        console.error("Firebase Admin initialization error:", error.message);
+        console.warn("Warning: Firebase Admin initialization failed:", error.message);
     }
 }
 
 async function verifyFirebaseToken(idToken) {
     try {
-        if (!admin.apps.length) {
-            throw new Error("Firebase Admin SDK is not initialized");
-        }
+        if (!idToken) return null;
         const decodedToken = await admin.auth().verifyIdToken(idToken);
         return decodedToken;
     } catch (error) {
-        throw new Error(`Firebase token verification failed: ${error.message}`);
+        console.error("Firebase token verification error:", error.message);
+        return null;
     }
 }
 
