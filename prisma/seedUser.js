@@ -1,20 +1,31 @@
+require("dotenv").config();
 const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcryptjs");
 
 const prisma = new PrismaClient();
 
 async function main() {
-    console.log("Seeding default users and creators...");
+    console.log("Seeding default users and creators from environment variables...");
 
-    const passwordHash = await bcrypt.hash("Password123!", 12);
+    const rawPassword = process.env.DEFAULT_USER_PASSWORD || "Password123!";
+    const passwordHash = await bcrypt.hash(rawPassword, 12);
+
+    const userEmail = process.env.USER_EMAIL || "user@fugen.app";
+    const userUsername = process.env.USER_USERNAME || "fugen_user";
+
+    const creatorEmail = process.env.CREATOR_EMAIL || "creator@fugen.app";
+    const creatorUsername = process.env.CREATOR_USERNAME || "fugen_creator";
+
+    const adminEmail = process.env.ADMIN_EMAIL || "admin@fugen.app";
+    const adminUsername = process.env.ADMIN_USERNAME || "fugen_admin";
 
     // 1. Regular User
     const regularUser = await prisma.user.upsert({
-        where: { email: "user@fugen.app" },
+        where: { email: userEmail },
         update: {},
         create: {
-            username: "fugen_user",
-            email: "user@fugen.app",
+            username: userUsername,
+            email: userEmail,
             displayName: "Fugen Member",
             passwordHash: passwordHash,
             role: "USER",
@@ -24,11 +35,11 @@ async function main() {
 
     // 2. Creator User
     const creatorUser = await prisma.user.upsert({
-        where: { email: "creator@fugen.app" },
+        where: { email: creatorEmail },
         update: {},
         create: {
-            username: "fugen_creator",
-            email: "creator@fugen.app",
+            username: creatorUsername,
+            email: creatorEmail,
             displayName: "Fugen Star Creator",
             bio: "Official Fugen Content Creator | Daily Live Streams 🎥",
             passwordHash: passwordHash,
@@ -39,11 +50,11 @@ async function main() {
 
     // 3. Admin User
     const adminUser = await prisma.user.upsert({
-        where: { email: "admin@fugen.app" },
+        where: { email: adminEmail },
         update: {},
         create: {
-            username: "fugen_admin",
-            email: "admin@fugen.app",
+            username: adminUsername,
+            email: adminEmail,
             displayName: "Fugen Admin",
             passwordHash: passwordHash,
             role: "ADMIN",
@@ -52,9 +63,9 @@ async function main() {
     });
 
     console.log("Seeded Users:");
-    console.log(" - Regular User:", regularUser.username);
-    console.log(" - Creator User:", creatorUser.username);
-    console.log(" - Admin User:", adminUser.username);
+    console.log(" - Regular User:", regularUser.username, `(${regularUser.email})`);
+    console.log(" - Creator User:", creatorUser.username, `(${creatorUser.email})`);
+    console.log(" - Admin User:", adminUser.username, `(${adminUser.email})`);
 }
 
 main()
