@@ -43,6 +43,13 @@ async function register(req, res, next) {
     try {
         const data = registerSchema.parse(req.body);
 
+        if (!data.email || !data.username) {
+            return res.status(400).json({
+                success: false,
+                message: "Email and username are required"
+            });
+        }
+
         const existingUser = await prisma.user.findFirst({
             where: {
                 OR: [
@@ -185,6 +192,13 @@ async function firebaseAuth(req, res, next) {
         }
 
         const decodedToken = await verifyFirebaseToken(idToken);
+        if (!decodedToken || !decodedToken.uid) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid Firebase ID token"
+            });
+        }
+
         const firebaseUid = decodedToken.uid;
         const email = (decodedToken.email || `${firebaseUid}@fugen.app`).toLowerCase();
 
