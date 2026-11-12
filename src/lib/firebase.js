@@ -5,16 +5,16 @@ if (!admin.apps.length) {
         if (process.env.FIREBASE_SERVICE_ACCOUNT) {
             let serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
             if (serviceAccount.private_key) {
-                serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
+                serviceAccount.private_key = serviceAccount.private_key.replace(/\\\\n/g, '\n').replace(/\\n/g, '\n');
             }
             admin.initializeApp({
                 credential: admin.credential.cert(serviceAccount)
             });
-            console.log("Firebase Admin initialized via FIREBASE_SERVICE_ACCOUNT JSON.");
+            console.log("Firebase Admin SDK successfully initialized via FIREBASE_SERVICE_ACCOUNT JSON.");
         } else if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_CLIENT_EMAIL && process.env.FIREBASE_PRIVATE_KEY) {
             let privateKey = process.env.FIREBASE_PRIVATE_KEY;
             if (privateKey) {
-                privateKey = privateKey.replace(/\\n/g, '\n');
+                privateKey = privateKey.replace(/\\\\n/g, '\n').replace(/\\n/g, '\n');
             }
             admin.initializeApp({
                 credential: admin.credential.cert({
@@ -23,13 +23,13 @@ if (!admin.apps.length) {
                     privateKey: privateKey
                 })
             });
-            console.log("Firebase Admin initialized via individual environment variables.");
+            console.log("Firebase Admin SDK successfully initialized via individual environment variables.");
         } else {
             admin.initializeApp();
-            console.log("Firebase Admin initialized via Application Default Credentials.");
+            console.log("Firebase Admin SDK initialized via Application Default Credentials.");
         }
     } catch (error) {
-        console.warn("Warning: Firebase Admin initialization failed:", error.message);
+        console.error("CRITICAL: Firebase Admin initialization failed:", error.message);
     }
 }
 
