@@ -24,6 +24,17 @@ async function authMiddleware(req, res, next) {
 
         const token = parts[1];
 
+        // Allow guest bypass token when authentication is temporarily bypassed
+        if (token === "guest_bypass_token") {
+            req.user = {
+                userId: "guest_user_id",
+                username: "guest",
+                email: "guest@fugen.app",
+                role: "USER"
+            };
+            return next();
+        }
+
         // 1. Try Firebase ID Token verification
         try {
             const decodedFirebaseToken = await verifyFirebaseToken(token);
