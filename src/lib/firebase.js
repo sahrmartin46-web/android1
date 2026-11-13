@@ -25,16 +25,16 @@ if (!admin.apps.length) {
             });
             console.log("Firebase Admin SDK successfully initialized via individual environment variables.");
         } else {
-            admin.initializeApp();
-            console.log("Firebase Admin SDK initialized via Application Default Credentials.");
+            console.log("Firebase Admin SDK skipped (no credentials provided).");
         }
     } catch (error) {
-        console.error("CRITICAL: Firebase Admin initialization failed:", error.message);
+        console.warn("Non-fatal Warning: Firebase Admin initialization failed:", error.message);
     }
 }
 
 async function verifyFirebaseToken(idToken) {
     try {
+        if (!admin.apps.length) return null;
         if (!idToken) return null;
         const decodedToken = await admin.auth().verifyIdToken(idToken);
         return decodedToken;
@@ -45,6 +45,6 @@ async function verifyFirebaseToken(idToken) {
 }
 
 module.exports = {
-    admin,
+    admin: admin.apps.length ? admin : null,
     verifyFirebaseToken
 };
