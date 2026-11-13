@@ -31,11 +31,13 @@ class LoginActivity : AppCompatActivity() {
 
         sessionManager = SessionManager(this)
 
-        if (sessionManager.isLoggedIn()) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-            return
+        // Temporarily bypass login authentication
+        if (sessionManager.getAuthToken().isNullOrEmpty()) {
+            sessionManager.saveAuthToken("guest_bypass_token")
         }
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+        return
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
