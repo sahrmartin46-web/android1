@@ -88,7 +88,7 @@ dependencies {
     }
 
     // Firebase BoM and Auth for Production
-    implementation(platform("com.google.firebase:firebase-bom:35.2.0"))
+    implementation(platform("com.google.firebase:firebase-bom:33.8.0"))
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-analytics")
 
