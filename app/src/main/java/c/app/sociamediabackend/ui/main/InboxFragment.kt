@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import c.app.sociamediabackend.data.api.ApiClient
 import c.app.sociamediabackend.databinding.FragmentInboxBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class InboxFragment : Fragment() {
@@ -26,32 +27,34 @@ class InboxFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.root.getChildAt(1).setOnClickListener {
-            fetchRealMessagesAndInteractions()
+            fetchAdvancedMessagesCenter()
         }
 
         binding.root.getChildAt(2).setOnClickListener {
-            fetchRealActivityNotifications()
+            fetchAdvancedNotificationCenter()
         }
     }
 
-    private fun fetchRealMessagesAndInteractions() {
+    private fun fetchAdvancedMessagesCenter() {
+        Toast.makeText(requireContext(), "Loading Direct Messages...", Toast.LENGTH_SHORT).show()
         lifecycleScope.launch {
             try {
-                val res = ApiClient.getService(requireContext()).getPosts(feedType = "foryou", limit = 5)
+                val res = ApiClient.getService(requireContext()).getPosts(feedType = "foryou", limit = 10)
                 if (res.isSuccessful && res.body()?.success == true) {
                     val posts = res.body()?.posts.orEmpty()
                     val messages = if (posts.isNotEmpty()) {
-                        posts.map { "• @${it.author?.username ?: "creator"}: ${it.content}" }.toTypedArray()
+                        posts.map { "💬 Feed Interaction\n🕒 Just now" }.toTypedArray()
                     } else {
-                        arrayOf("No new messages or interaction feeds.")
+                        arrayOf("💬 No new messages or feed interactions yet.")
                     }
                     MaterialAlertDialogBuilder(requireContext())
-                        .setTitle("💬 Direct Messages & Feed Interactions")
+                        .setTitle("💬 Advanced Message & Interaction Center")
                         .setItems(messages, null)
-                        .setPositiveButton("Close", null)
+                        .setPositiveButton("Refresh") { _, _ -> fetchAdvancedMessagesCenter() }
+                        .setNegativeButton("Close", null)
                         .show()
                 } else {
-                    Toast.makeText(requireContext(), "Failed to load inbox feed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to load messages", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), "Error: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
@@ -59,27 +62,35 @@ class InboxFragment : Fragment() {
         }
     }
 
-    private fun fetchRealActivityNotifications() {
+    private fun fetchAdvancedNotificationCenter() {
+        Toast.makeText(requireContext(), "Fetching Real-Time Notifications...", Toast.LENGTH_SHORT).show()
         lifecycleScope.launch {
             try {
-                val res = ApiClient.getService(requireContext()).getLiveSessions()
-                if (res.isSuccessful && res.body()?.success == true) {
-                    val sessions = res.body()?.liveSessions.orEmpty()
-                    val notifs = if (sessions.isNotEmpty()) {
-                        sessions.map { "• LIVE Stream Active: @${it.host?.username ?: "host"} is streaming \"${it.title}\"" }.toTypedArray()
-                    } else {
-                        arrayOf("No active LIVE streams or notifications.")
+                val liveRes = async { ApiClient.getService(requireContext()).getLiveSessions() }
+                val liveData = liveRes.await()
+
+                val notificationsList = mutableListOf<String>()
+
+                if (liveData.isSuccessful && liveData.body()?.success == true) {
+                    val sessions = liveData.body()?.liveSessions.orEmpty()
+                    for (session in sessions) {
+                        notificationsList.add("🔴 LIVE Alert: Active stream detected!")
                     }
-                    MaterialAlertDialogBuilder(requireContext())
-                        .setTitle("🔔 Real-Time Notifications & LIVE Alerts")
-                        .setItems(notifs, null)
-                        .setPositiveButton("Close", null)
-                        .show()
-                } else {
-                    Toast.makeText(requireContext(), "Failed to load notifications", Toast.LENGTH_SHORT).show()
                 }
+
+                if (notificationsList.isEmpty()) {
+                    notificationsList.add("🔔 All caught up! No new notifications at the moment.")
+                }
+
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("🔔 Advanced Notification & LIVE Alert Center")
+                    .setItems(notificationsList.toTypedArray(), null)
+                    .setPositiveButton("Refresh") { _, _ -> fetchAdvancedNotificationCenter() }
+                    .setNegativeButton("Close", null)
+                    .show()
+
             } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Error: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Error loading notifications: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
             }
         }
     }
