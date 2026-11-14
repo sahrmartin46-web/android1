@@ -17,7 +17,7 @@ class SessionManager(context: Context) {
         private const val KEY_BASE_URL = "base_url"
         
         // Default base URL for Sevalla deployment
-        const val DEFAULT_BASE_URL = "https://fugen-videoplatform.sevalla.app/api/"
+        const val DEFAULT_BASE_URL = "https://fugen-video-platform-app-h6tmo.sevalla.app/api/"
     }
 
     fun saveAuthToken(token: String) {
