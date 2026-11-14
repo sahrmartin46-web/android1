@@ -2,7 +2,7 @@ const { z } = require("zod");
 
 const prisma = require("../lib/prisma");
 
-const optionalUrl = z.string().url().optional().or(z.literal("")).nullable();
+const optionalUrl = z.string().optional().or(z.literal("")).nullable();
 
 const updateProfileSchema = z.object({
     displayName: z.string().min(1).max(100).optional(),
