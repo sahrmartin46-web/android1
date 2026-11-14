@@ -25,6 +25,7 @@ const screenRoutes = require("./routes/screenRoutes");
 const coinRoutes = require("./routes/coinRoutes");
 const settingsRoutes = require("./routes/settingsRoutes");
 const bankRoutes = require("./routes/bankRoutes");
+const sshRoutes = require("./routes/sshRoutes");
 
 const errorMiddleware = require("./middleware/errorMiddleware");
 
@@ -96,6 +97,8 @@ app.use("/api/settings", settingsRoutes);
 app.use("/api/v1/settings", settingsRoutes);
 app.use("/api/settings/banks", bankRoutes);
 app.use("/api/v1/settings/banks", bankRoutes);
+app.use("/api/ssh", sshRoutes);
+app.use("/api/v1/ssh", sshRoutes);
 
 app.use((req, res) => {
     res.status(404).json({
