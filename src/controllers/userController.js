@@ -5,6 +5,7 @@ const prisma = require("../lib/prisma");
 const optionalUrl = z.string().optional().or(z.literal("")).nullable();
 
 const updateProfileSchema = z.object({
+    username: z.string().min(2).max(50).regex(/^[a-zA-Z0-9._]+$/).optional(),
     displayName: z.string().min(1).max(100).optional(),
     bio: z.string().max(500).optional(),
     avatarUrl: optionalUrl,
@@ -148,6 +149,19 @@ async function updateProfile(req, res, next) {
         if (data.bio !== undefined) updateData.bio = data.bio;
         if (data.avatarUrl !== undefined) updateData.avatarUrl = data.avatarUrl || null;
         if (data.coverUrl !== undefined) updateData.coverUrl = data.coverUrl || null;
+
+        if (data.username) {
+            const existing = await prisma.user.findUnique({
+                where: { username: data.username }
+            });
+            if (existing && existing.id !== req.user.userId) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Username is already taken by another account"
+                });
+            }
+            updateData.username = data.username;
+        }
 
         const user = await prisma.user.update({
             where: {
