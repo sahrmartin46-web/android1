@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "nodemon src/server.js",
-    "start": "node src/server.js",
+    "start": "prisma db push --accept-data-loss && node src/server.js",
     "build": "prisma generate",
     "postinstall": "prisma generate",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -15,6 +15,9 @@
     "prisma:studio": "prisma studio",
     "prisma:seed": "node prisma/seedGifts.js",
     "prisma:seed:user": "node prisma/seedUser.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "keywords": [
     "social",
