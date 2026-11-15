@@ -7,10 +7,17 @@ function uploadFile(req, res, next) {
             });
         }
 
-        const defaultStorageUrl = "https://f6d1d15e6f0b37b4b8fcad3c41a7922d.r2.cloudflarestorage.com";
-        const storageBaseUrl = process.env.STORAGE_BASE_URL || defaultStorageUrl;
-        const cleanBaseUrl = storageBaseUrl.endsWith('/') ? storageBaseUrl.slice(0, -1) : storageBaseUrl;
-        const fileUrl = `${cleanBaseUrl}/${req.file.filename}`;
+        let fileUrl;
+        if (process.env.STORAGE_BASE_URL) {
+            const cleanBaseUrl = process.env.STORAGE_BASE_URL.endsWith('/')
+                ? process.env.STORAGE_BASE_URL.slice(0, -1)
+                : process.env.STORAGE_BASE_URL;
+            fileUrl = `${cleanBaseUrl}/${req.file.filename}`;
+        } else {
+            const host = req.get("host");
+            const protocol = req.protocol === "https" || req.get("x-forwarded-proto") === "https" ? "https" : "http";
+            fileUrl = `${protocol}://${host}/uploads/${req.file.filename}`;
+        }
 
         res.status(201).json({
             success: true,
